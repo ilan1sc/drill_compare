@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Import flight-simulator CSV exports into a local SQLite database."""
-import argparse, csv, hashlib, json, math, re, sqlite3
+import argparse, csv, hashlib, json, math, re, sqlite3, zipfile
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,7 +13,7 @@ DRILLS = {"שמינייה": "Eight", "2 X שמינייה": "DoubleEight", "תב�
 HEADER_MAP = {"זמן": "time", "מהירות (IAS)": "ias_knots", "כיוון אף": "heading",
               "גלגול": "roll_roughness", "עלרוד": "pitch_roughness", "כוח": "collective_roughness"}
 REQUIRED = ("time", "height", "ias_knots", "heading", "rollModel", "pitchModel", "RollStick", "PitchStick", "COLL")
-FILENAME = re.compile(r"^c(?P<cadet>\d+)_(?P<sortie>\d+)_(?P<drill>.+)\.csv$", re.I)
+FILENAME = re.compile(r"^c(?P<cadet>\d+)_(?P<sortie>\d+)_(?P<drill>.+)\.(?:csv|xlsx)$", re.I)
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS imports (
@@ -80,9 +81,39 @@ def load_csv(path):
     if not rows: raise ValueError("CSV has no data rows")
     return rows
 
+def load_xlsx(path):
+    ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+    with zipfile.ZipFile(path) as archive:
+        shared = []
+        if "xl/sharedStrings.xml" in archive.namelist():
+            shared_root = ET.fromstring(archive.read("xl/sharedStrings.xml"))
+            shared = ["".join(node.text or "" for node in item.findall(".//m:t", ns))
+                      for item in shared_root.findall("m:si", ns)]
+        root = ET.fromstring(archive.read("xl/worksheets/sheet1.xml"))
+    parsed = []
+    for row in root.findall(".//m:sheetData/m:row", ns):
+        values = {}
+        for cell in row.findall("m:c", ns):
+            column = re.match(r"[A-Z]+", cell.attrib["r"]).group(0)
+            value_node = cell.find("m:v", ns)
+            value = "" if value_node is None else value_node.text
+            if cell.attrib.get("t") == "s" and value:
+                value = shared[int(value)]
+            values[column] = value
+        parsed.append(values)
+    if len(parsed) < 2: raise ValueError("XLSX has no data rows")
+    headers = parsed[0]
+    return [normalize({headers.get(column, column): value for column, value in row.items()})
+            for row in parsed[1:]]
+
+def load_data(path):
+    if path.suffix.lower() == ".csv": return load_csv(path)
+    if path.suffix.lower() == ".xlsx": return load_xlsx(path)
+    raise ValueError("supported formats are CSV and XLSX")
+
 def import_file(conn, path):
     cadet, sortie, drill_name, drill_code = parse_filename(path)
-    rows, report = load_csv(path), {"interpolated": [], "incomplete": [], "errors": []}
+    rows, report = load_data(path), {"interpolated": [], "incomplete": [], "errors": []}
     for field in REQUIRED: interpolate(rows, field, report)
     complete = not report["incomplete"]
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -114,11 +145,55 @@ def import_file(conn, path):
         conn.rollback(); raise
     return {"file": path.name, "rows": len(rows), "status": "complete" if complete else "incomplete", "report": report}
 
+def export_csv_tables(conn, destination):
+    destination.mkdir(parents=True, exist_ok=True)
+    tables = [row[0] for row in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name")]
+    for table in tables:
+        if table == "telemetry_samples":
+            continue
+        columns = [row[1] for row in conn.execute(f'PRAGMA table_info("{table}")')]
+        with (destination / f"{table}.csv").open("w", encoding="utf-8-sig", newline="") as output:
+            writer = csv.writer(output)
+            writer.writerow(columns)
+            writer.writerows(conn.execute(f'SELECT * FROM "{table}"'))
+    base_columns = ["Cadet", "Sortie", "Drill", "Source row", "Interpolated fields"]
+    records_by_drill = {}
+    query = "SELECT i.cadet_number, i.sortie_number, i.drill_code, t.source_row, t.interpolated_fields, t.payload_json FROM telemetry_samples t JOIN imports i ON i.id=t.import_id ORDER BY i.cadet_number, i.sortie_number, i.drill_code, t.source_row"
+    for cadet, sortie, drill, source_row, interpolated, payload_json in conn.execute(query):
+        payload = json.loads(payload_json)
+        records_by_drill.setdefault(drill, []).append((cadet, sortie, source_row, interpolated, payload))
+    for drill, records in records_by_drill.items():
+        payload_fields = set().union(*(payload.keys() for *_, payload in records))
+        payload_columns = sorted(field for field in payload_fields if field not in {"_interpolated", "drill"})
+        with (destination / f"{drill}.csv").open("w", encoding="utf-8-sig", newline="") as output:
+            writer = csv.writer(output)
+            writer.writerow(base_columns + payload_columns)
+            for cadet, sortie, source_row, interpolated, payload in records:
+                values = [cadet, sortie, drill, source_row, interpolated]
+                values += [payload.get(field) for field in payload_columns]
+                writer.writerow([round(value, 4) if isinstance(value, float) else value for value in values])
+    return tables
+
 def main():
     parser = argparse.ArgumentParser(description="Import flight-simulator CSV files into SQLite.")
     parser.add_argument("folder", type=Path, nargs="?", help="folder containing CSV exports")
     parser.add_argument("--database", type=Path, default=Path(__file__).with_name("flight_school.db"))
+    parser.add_argument(
+        "--export-csv",
+        type=Path,
+        nargs="?",
+        const=Path(__file__).resolve().parent.parent / "exports" / "csv",
+        metavar="FOLDER",
+        help="export database tables as CSV files; defaults to exports/csv",
+    )
     args = parser.parse_args()
+    conn = sqlite3.connect(args.database)
+    conn.executescript("PRAGMA foreign_keys=ON;" + SCHEMA)
+    if args.export_csv:
+        tables = export_csv_tables(conn, args.export_csv.expanduser())
+        print(f"Exported {len(tables)} tables to: {args.export_csv.expanduser()}")
+        return
     if args.folder is None:
         print("Flight Simulator CSV Importer")
         entered_path = input("Folder containing CSV files: ").strip()
@@ -127,10 +202,8 @@ def main():
         args.folder = Path(entered_path).expanduser()
     if not args.folder.is_dir():
         parser.error(f"folder not found: {args.folder}")
-    conn = sqlite3.connect(args.database)
-    conn.executescript("PRAGMA foreign_keys=ON;" + SCHEMA)
-    files = sorted(args.folder.glob("*.csv"))
-    if not files: parser.error("no CSV files found")
+    files = sorted([*args.folder.glob("*.csv"), *args.folder.glob("*.xlsx")])
+    if not files: parser.error("no CSV or XLSX files found")
     results = []
     for file in files:
         try: results.append(import_file(conn, file))

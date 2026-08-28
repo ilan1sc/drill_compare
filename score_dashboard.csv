@@ -1,0 +1,23 @@
+﻿cadet,sortie,drill,status,score,raw_score,total_deduction,row_count,used_metrics,filename,deduction_height_ft,deduction_ias_knots,deduction_bank_degrees,deduction_pitch_stick,deduction_roll_stick,deduction_collective_roughness
+1,1,DoubleEight,scored,34.7716,347.7156,65.2284,2125,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c1_1_2 X שמינייה.xlsx,55.6649,5.9896,3.574,0.0,0.0,0.0
+1,1,DoubleOptimalTurn,scored,26.1544,261.5444,73.8456,1202,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c1_1_2 X פנייה מיטבית.xlsx,15.4997,36.9033,21.4426,0.0,0.0,0.0
+1,1,DoublePattern,scored,0.0,0.0,1310.6416,6230,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c1_1_2 X תבנית.xlsx,1273.661,3.8521,33.1198,0.0,0.0,0.0087
+1,1,Final,scored,0.0,0.0,512.0446,2151,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c1_1_פיינל.xlsx,425.6547,51.6628,34.7271,0.0,0.0,0.0
+2,1,DoubleEight,scored,0.0,0.0,123.5077,1398,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c2_1_2 X שמינייה.xlsx,93.1671,24.8046,5.536,0.0,0.0,0.0
+2,1,DoublePattern,scored,0.0,0.0,1985.534,714,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c2_1_2 X תבנית.xlsx,1940.032,26.174,19.328,0.0,0.0,0.0
+2,1,Final,scored,0.0,0.0,492.7912,3127,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c2_1_פיינל.xlsx,381.6796,80.5557,30.5505,0.0,0.0,0.0054
+3,1,DoubleEight,scored,37.9956,379.9557,62.0044,4217,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c3_1_2 X שמינייה.xlsx,36.6849,19.5859,5.7336,0.0,0.0,0.0
+3,1,DoubleOptimalTurn,scored,38.5911,385.9111,61.4089,1202,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c3_1_2 X פנייה מיטבית.xlsx,32.6918,6.5138,22.2032,0.0,0.0,0.0
+3,1,DoublePattern,scored,0.0,0.0,1375.7287,1123,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c3_1_2 X תבנית.xlsx,1331.9195,23.0411,20.7681,0.0,0.0,0.0
+3,1,Final,scored,0.0,0.0,276.5304,2390,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c3_1_פיינל.xlsx,187.2029,56.9546,32.3729,0.0,0.0,0.0
+4,1,DoubleEight,scored,46.4964,464.9638,53.5036,4436,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c4_1_2 X שמינייה.xlsx,39.3981,5.0669,9.0386,0.0,0.0,0.0
+4,1,DoublePattern,scored,0.0,0.0,1072.2131,1643,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c4_1_2 X תבנית.xlsx,1022.6918,37.4514,12.0515,0.0,0.0,0.0185
+4,1,Final,scored,0.0,0.0,372.0288,3524,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c4_1_פיינל.xlsx,251.4208,90.7771,29.8298,0.0,0.0,0.001
+5,1,DoubleEight,scored,39.9022,399.0222,60.0978,3925,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c5_1_2 X שמינייה.xlsx,43.5354,9.2297,7.3326,0.0,0.0,0.0
+5,1,DoubleOptimalTurn,scored,0.0,0.0,108.3983,601,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c5_1_2 X פנייה מיטבית.xlsx,39.843,53.892,14.6633,0.0,0.0,0.0
+5,1,DoublePattern,scored,0.0,0.0,1129.3182,426,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c5_1_2 X תבנית.xlsx,1082.5663,38.7679,7.984,0.0,0.0,0.0
+5,1,Final,scored,0.0,0.0,447.0891,1967,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c5_1_פיינל.xlsx,370.8543,43.3749,32.86,0.0,0.0,0.0
+6,1,DoubleEight,scored,55.3538,553.5383,44.6462,3984,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c6_1_2 X שמינייה.xlsx,33.9077,6.1928,4.5457,0.0,0.0,0.0
+6,1,DoubleOptimalTurn,scored,36.3316,363.3165,63.6684,1202,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c6_1_2 X פנייה מיטבית.xlsx,40.6445,0.7273,22.2965,0.0,0.0,0.0
+6,1,DoublePattern,scored,0.0,0.0,1695.0112,1269,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c6_1_2 X תבנית.xlsx,1654.9307,29.7196,10.3068,0.0,0.0,0.054
+6,1,Final,scored,0.0,0.0,399.4511,1996,"Height, IAS, Bank, PitchStick, RollStick, Collective roughness",c6_1_פיינל.xlsx,325.9196,43.7462,29.7854,0.0,0.0,0.0
