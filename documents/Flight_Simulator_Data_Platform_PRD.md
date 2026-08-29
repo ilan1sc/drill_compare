@@ -390,6 +390,13 @@ drill = DoubleEight
 
 Re-importing the same cadet, sortie, and drill replaces the existing attempt in the database.
 
+### View db in sql lite
+
+```bash
+sqlitebrowser "/home/ilan/Documents/flight school/drill_compare/code/flight_school.db"
+```
+ opens a smal ui for  sql operations
+
 ### Export database to CSV
 
 Export the local database into drill-specific, Excel-friendly CSV files with:
@@ -412,9 +419,17 @@ A custom CSV export folder can also be provided:
 python3 code/import_flight_data.py --export-csv "/home/ilan/Desktop/drill_csv_export"
 ```
 
+```bash
+cd "/home/ilan/Documents/flight school/drill_compare"
+
+python3 code/import_flight_data.py --export-csv "/home/ilan/Desktop/my_export_folder"
+```
+
 ### Generate a segment comparison graph
 
-Generate a Plotly HTML graph comparing one cadet against the cohort mean and standard deviation per segment:
+Generate a Plotly HTML graph comparing one cadet against the cohort mean and standard deviation per segment.
+
+This view compresses each segment into one average value per metric:
 
 ```bash
 python3 code/segment_comparison.py 3 --drill DoubleEight
@@ -433,6 +448,59 @@ python3 code/segment_comparison.py 3 --sortie 1 --drill DoubleEight
 ```
 
 The segment comparison includes height, IAS, heading, roll, PitchStick, PitchStick_DELTA, RollStick, RollStick_DELTA, and collective_roughness when those fields exist in the imported data.
+
+### Generate a segment timeline graph
+
+Generate a second Plotly HTML graph showing sample-by-sample telemetry inside each segment:
+
+```bash
+python3 code/segment_timeline.py 3 --drill DoubleEight
+```
+
+This creates:
+
+```text
+/home/ilan/Documents/flight school/drill_compare/exports/segments/cadet_3_sortie_1_DoubleEight_segments2.html
+```
+
+This view uses compressed drill time by default. It removes empty time gaps between segments while preserving the real duration inside each segment.
+
+To roll back to the original simulator timestamp display:
+
+```bash
+python3 code/segment_timeline.py 3 --drill DoubleEight --time-mode original --output exports/segments/cadet_3_sortie_1_DoubleEight_segments2_original_time.html
+```
+
+The segment timeline includes the selected cadet, the other-cadets mean, and the other-cadets standard deviation band.
+
+### Generate a God View map
+
+Generate a top-down orthophoto map for one cadet and drill:
+
+```bash
+python3 code/god_view_map.py 3 --drill DoubleEight
+```
+
+This creates:
+
+```text
+/home/ilan/Documents/flight school/drill_compare/exports/maps/cadet_3_sortie_1_DoubleEight_god_view.html
+```
+
+The God View map shows:
+
+- The selected cadet route colored by segment.
+- Other cadets as thin gray background routes.
+- Start and end markers.
+- Orthophoto background tiles when internet access is available in the browser.
+
+The map uses the ICD coordinate rules:
+
+- Do not use `x` / `y` columns for geographic position.
+- Use `latDeg` / `lonDeg` directly when present.
+- For Eight, DoubleEight, YNP, and OptimalTurn, convert `lat` / `lon` from radians to degrees.
+- For Pattern and DoublePattern, use `lat` / `lon` as degrees.
+- For Final and MissionTrack, use `lat` / `lon`, not `x` / `y`.
 
 ### Generate the all-cadets score dashboard
 
@@ -457,11 +525,60 @@ To score a different drill after its scoring rules are defined:
 python3 code/score_dashboard.py --drill DoublePattern
 ```
 
+The score dashboard writes both HTML and CSV output. The terminal prints both paths.
+
+
+### dted in the drill
+
+```bash
+xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/terrain_3d/cadet_3_sortie_1_DoubleEight_terrain_3d.html"
+```
+
+### 3d with orthophoto
+```bash
+python3 code/terrain_3d_plot.py 3 --drill DoubleEight \
+  --orthophoto-texture \
+  --ortho-zoom 17 \
+  --max-grid 250 \
+  --vertical-exaggeration 2
+```
+
+note to play with zoom and max grid zoom goes up beter res and heavy (zoom 17 is good 18 gets stuck)
+max grid goed up - sharper and heavy
+
+
+### 3d with orthophoto cesieum
+
+```bash
+xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/terrain_3d/cadet_3_sortie_1_DoubleEight_terrain_3d_cesium.html"
+```
+
 ### Open generated HTML files
 
-Generated dashboards and graphs are regular HTML files. They can be opened directly in a browser from the file manager, or from the command line:
+Generated dashboards, graphs, and maps are regular HTML files. Each HTML-generating script prints a ready-to-copy open command after it runs:
+
+```text
+Open HTML: xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/segments/cadet_3_sortie_1_DoubleEight_segments2.html"
+```
+
+The files can also be opened directly from the command line:
 
 ```bash
 xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_DoubleEight.html"
 xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/segments/cadet_3_sortie_1_DoubleEight_segments.html"
+xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/segments/cadet_3_sortie_1_DoubleEight_segments2.html"
+xdg-open "/home/ilan/Documents/flight school/drill_compare/exports/maps/cadet_3_sortie_1_DoubleEight_god_view.html"
+```
+
+### Current command checklist
+
+```bash
+cd "/home/ilan/Documents/flight school/drill_compare"
+python3 code/import_flight_data.py "/home/ilan/Documents/flight school/data/drills_separate/1_26/s1"
+python3 code/import_flight_data.py --export-csv
+python3 code/segment_comparison.py 3 --drill DoubleEight
+python3 code/segment_timeline.py 3 --drill DoubleEight
+python3 code/segment_timeline.py 3 --drill DoubleEight --time-mode original --output exports/segments/cadet_3_sortie_1_DoubleEight_segments2_original_time.html
+python3 code/god_view_map.py 3 --drill DoubleEight
+python3 code/score_dashboard.py
 ```
