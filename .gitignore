@@ -1,0 +1,15 @@
+# Databases
+*.db
+
+# LibreOffice lock files
+.~lock.*#
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated artifacts
+exports/
+exported_csv/
+*.html
+*.png

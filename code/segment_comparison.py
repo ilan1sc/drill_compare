@@ -22,8 +22,15 @@ METRICS = [
     ("collective_roughness", "json_extract(t.payload_json, '$.collective_roughness')", "Collective Roughness", "collective_roughness"),
 ]
 
-def signed_angle_delta(value, reference):
-    return ((value - reference + 180.0) % 360.0) - 180.0
+def unwrap_heading(previous_heading, offset, heading):
+    if previous_heading is None:
+        return offset
+    delta = heading - previous_heading
+    if delta < -300.0:
+        return offset + 360.0
+    if delta > 300.0:
+        return offset - 360.0
+    return offset
 
 def segment_stats(connection, cadet, sortie, drill, metric_key, metric_expression):
     if metric_key == "relative_heading_degrees":
@@ -51,11 +58,16 @@ def relative_heading_segment_stats(connection, cadet, sortie, drill):
     WHERE i.drill_code=? AND i.complete=1 AND t.segment_number IS NOT NULL AND t.heading_degrees IS NOT NULL
     ORDER BY i.cadet_number, i.sortie_number, t.source_row"""
     start_heading = {}
+    previous_heading = {}
+    heading_offset = {}
     values_by_segment = {}
     for other_cadet, other_sortie, segment, heading in connection.execute(query, (drill,)):
         attempt = (other_cadet, other_sortie)
-        start_heading.setdefault(attempt, heading)
-        relative_heading = signed_angle_delta(heading, start_heading[attempt])
+        heading_offset[attempt] = unwrap_heading(previous_heading.get(attempt), heading_offset.get(attempt, 0.0), heading)
+        unwrapped_heading = heading + heading_offset[attempt]
+        start_heading.setdefault(attempt, unwrapped_heading)
+        relative_heading = unwrapped_heading - start_heading[attempt]
+        previous_heading[attempt] = heading
         values_by_segment.setdefault((attempt, segment), []).append(relative_heading)
 
     grouped = {}
@@ -115,6 +127,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.write_html(args.output, include_plotlyjs=True)
     print(f"Saved graph: {args.output}")
+    print(f'Open HTML: xdg-open "{args.output.resolve()}"')
 
 if __name__ == "__main__":
     main()

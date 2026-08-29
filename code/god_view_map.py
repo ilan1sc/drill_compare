@@ -55,7 +55,7 @@ def normalize_coordinate(raw_lat, raw_lon, lat_deg=None, lon_deg=None, drill=Non
     return None, None, None
 
 
-def load_route(connection, cadet, sortie, drill):
+def load_attempt_route(connection, cadet, sortie, drill):
     rows = connection.execute(
         """SELECT t.source_row, t.segment_number, t.heading_degrees, t.payload_json
            FROM telemetry_samples t
@@ -89,6 +89,26 @@ def load_route(connection, cadet, sortie, drill):
     return route, sorted(coordinate_modes)
 
 
+def load_cohort_routes(connection, target_cadet, target_sortie, drill):
+    attempts = connection.execute(
+        """SELECT cadet_number, sortie_number
+           FROM imports
+           WHERE drill_code=? AND complete=1
+           ORDER BY cadet_number, sortie_number""",
+        (drill,),
+    ).fetchall()
+    routes = []
+    coordinate_modes = set()
+    for cadet, sortie in attempts:
+        if cadet == target_cadet and sortie == target_sortie:
+            continue
+        route, modes = load_attempt_route(connection, cadet, sortie, drill)
+        if route:
+            routes.append(route)
+            coordinate_modes.update(modes)
+    return routes, sorted(coordinate_modes)
+
+
 def by_segment(route):
     grouped = {}
     for point in route:
@@ -96,7 +116,22 @@ def by_segment(route):
     return sorted(grouped.items(), key=lambda item: (-1 if item[0] is None else item[0]))
 
 
-def build_map(route, coordinate_modes, cadet, sortie, drill, output):
+def add_other_cadets_layer(fig, cohort_routes):
+    for index, route in enumerate(cohort_routes):
+        fig.add_trace(
+            go.Scattermap(
+                lat=[point["lat"] for point in route],
+                lon=[point["lon"] for point in route],
+                mode="lines",
+                name="Other cadets",
+                line=dict(width=2, color="rgba(90,90,90,0.45)"),
+                hovertemplate="Other cadet route<br>Lat %{lat:.6f}<br>Lon %{lon:.6f}<extra></extra>",
+                showlegend=index == 0,
+            )
+        )
+
+
+def build_map(route, cohort_routes, coordinate_modes, cadet, sortie, drill, output):
     if len(route) < 2:
         raise SystemExit("Not enough geographic points found for this cadet, sortie, and drill.")
 
@@ -111,6 +146,8 @@ def build_map(route, coordinate_modes, cadet, sortie, drill, output):
         "#e377c2",
         "#17becf",
     ]
+
+    add_other_cadets_layer(fig, cohort_routes)
 
     for index, (segment, points) in enumerate(by_segment(route)):
         name = f"Segment {segment}" if segment is not None else "No segment"
@@ -185,9 +222,11 @@ def main():
         args.output = EXPORTS_DIR / f"cadet_{args.cadet}_sortie_{args.sortie}_{args.drill}_god_view.html"
 
     connection = sqlite3.connect(args.database)
-    route, coordinate_modes = load_route(connection, args.cadet, args.sortie, args.drill)
-    build_map(route, coordinate_modes, args.cadet, args.sortie, args.drill, args.output)
+    route, coordinate_modes = load_attempt_route(connection, args.cadet, args.sortie, args.drill)
+    cohort_routes, cohort_modes = load_cohort_routes(connection, args.cadet, args.sortie, args.drill)
+    build_map(route, cohort_routes, sorted(set(coordinate_modes + cohort_modes)), args.cadet, args.sortie, args.drill, args.output)
     print(f"Saved map: {args.output}")
+    print(f'Open HTML: xdg-open "{args.output.resolve()}"')
 
 
 if __name__ == "__main__":

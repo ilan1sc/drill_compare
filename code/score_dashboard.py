@@ -309,6 +309,7 @@ def main():
     build_dashboard(scores, args.output)
     csv_path = write_summary_csv(scores, args.output)
     print(f"Saved dashboard: {args.output}")
+    print(f'Open HTML: xdg-open "{args.output.resolve()}"')
     print(f"Saved score summary: {csv_path}")
     print(f"Ruleset: {RULESET_VERSION}")
 

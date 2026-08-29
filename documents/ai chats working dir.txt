@@ -1,0 +1,26 @@
+ai chats
+working dir:
+
+/home/ilan/Documents/Codex/2026-08-28/realtime-voice-chat
+
+chat share:
+https://chatgpt.com/s/cx_6a9202eba37c8191a2949b82e1cf61ab
+deeplink:
+codex://threads/01a0494e-8e7a-76b1-8413-99605fca735d
+
+claude for check_in:
+
+
+Use the built-in /export slash command in Claude Code. Type /export and it will let you copy the full conversation to your clipboard or write it to a file (Markdown).
+
+Other options:
+
+Raw transcript file — Claude Code stores this session as JSONL at: /home/ilan/.claude/projects/-home-ilan-Documents-flight-school-check-in-app-Check-In-Ofer-master/<session-id>.jsonl The newest .jsonl in that folder is this chat. Copy it wherever you like:
+
+ls -lt "/home/ilan/.claude/projects/-home-ilan-Documents-flight-school-check-in-app-Check-In-Ofer-master/"*.jsonl | head -1
+/resume — lists past sessions if you need to identify which file is which.
+/export is the one you want for a readable copy.
+
+
+guth:
+look at outputs on other cadets
