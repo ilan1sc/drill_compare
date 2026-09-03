@@ -502,30 +502,58 @@ The map uses the ICD coordinate rules:
 - For Pattern and DoublePattern, use `lat` / `lon` as degrees.
 - For Final and MissionTrack, use `lat` / `lon`, not `x` / `y`.
 
-### Generate the all-cadets score dashboard
+### Generate score dashboards
 
-Generate the current score dashboard with:
+Generate the all-drills score dashboard with:
 
 ```bash
 python3 code/score_dashboard.py
 ```
 
-By default, the score dashboard uses the `DoubleEight` drill because it is the first drill with V1 target and tolerance rules.
+By default, the score dashboard scores all imported drills and writes one combined dashboard.
 
 This creates:
 
 ```text
-/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_DoubleEight.html
-/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_DoubleEight.csv
+/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_all_drills.html
+/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_all_drills.csv
 ```
 
-To score a different drill after its scoring rules are defined:
+To score one drill only:
 
 ```bash
 python3 code/score_dashboard.py --drill DoublePattern
 ```
 
-The score dashboard writes both HTML and CSV output. The terminal prints both paths.
+To generate the combined dashboard and also one separate dashboard per drill:
+
+```bash
+python3 code/score_dashboard.py --write-drill-dashboards
+```
+
+This creates per-drill outputs such as:
+
+```text
+/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_DoubleEight.html
+/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_DoublePattern.html
+/home/ilan/Documents/flight school/drill_compare/exports/dashboards/score_dashboard_Final.html
+```
+
+The score dashboard writes both HTML and CSV output. The terminal prints both paths and a ready-to-copy open command.
+
+The current implementation uses scoring rules extracted from:
+
+```text
+/home/ilan/Documents/flight school/managment/אפיון מידע צק מסוקים 1.0 12.4.docx
+```
+
+Current scoring coverage:
+
+- Eight / DoubleEight: Hebrew doc rules for height, IAS, and bank. Heading-axis and transition-point distance require phase geometry and are not yet implemented.
+- Pattern / DoublePattern: Hebrew doc rules for IAS 70-90, pattern bank, and power range. Distance-to-axis and exact phase detection require geometry and are not yet implemented.
+- Final: provisional rules only; no final-specific rubric was found in the extracted Hebrew doc text.
+- OptimalTurn / DoubleOptimalTurn: provisional rules only; no optimal-turn-specific rubric was found in the extracted Hebrew doc text.
+- Track and YNP families: provisional rules only; the extracted Hebrew doc text only includes section headings.
 
 
 ### dted in the drill
@@ -581,4 +609,5 @@ python3 code/segment_timeline.py 3 --drill DoubleEight
 python3 code/segment_timeline.py 3 --drill DoubleEight --time-mode original --output exports/segments/cadet_3_sortie_1_DoubleEight_segments2_original_time.html
 python3 code/god_view_map.py 3 --drill DoubleEight
 python3 code/score_dashboard.py
+python3 code/score_dashboard.py --write-drill-dashboards
 ```
