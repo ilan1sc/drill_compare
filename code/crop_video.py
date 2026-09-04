@@ -16,7 +16,7 @@ size. The result is written to exports/video/.
 ex. 
 cd "/home/ilan/Documents/flight school/drill_compare" && printf '/home/ilan/Documents/flight school/data/s1 c2.mp4\n0,200\n0,480\n\n\n\n' | python3 code/crop_video.py
 cd "/home/ilan/Documents/flight school/drill_compare" && printf '/home/ilan/Documents/flight school/data/s1 c2.mp4\n0,200\n0,480\n0\n10\n\n' | python3 code/crop_video.py
-
+sd
 """
 
 import json
