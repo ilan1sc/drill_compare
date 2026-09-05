@@ -24,9 +24,21 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from bidi.algorithm import get_display
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, features
 from tqdm import tqdm
+
+# Pillow here is built with libraqm, so ImageFont.truetype() uses the RAQM
+# layout engine, which does full Unicode bidi + shaping itself. Feeding it
+# python-bidi's get_display() output double-applies bidi and scrambles the
+# text -- so we pass LOGICAL text straight through and let RAQM lay it out,
+# only choosing left/right alignment ourselves. Fall back to python-bidi
+# reordering only if RAQM isn't available.
+_HAS_RAQM = features.check("raqm")
+if not _HAS_RAQM:
+    from bidi.algorithm import get_display
+else:
+    def get_display(s):  # no-op: RAQM handles bidi
+        return s
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from schema import Transcript  # noqa: E402
@@ -49,7 +61,7 @@ def _is_rtl(s: str) -> bool:
 
 
 def _wrap_logical(draw, text, font, max_w):
-    """Wrap on LOGICAL text (bidi reordering happens per-line, afterwards)."""
+    """Wrap on the logical string; RAQM handles bidi at draw time."""
     words, lines, cur = text.split(), [], ""
     for w in words:
         trial = f"{cur} {w}".strip()
@@ -146,11 +158,12 @@ def render(video: str, transcript_json: str, start: float, duration: float,
             draw.rectangle([0, h - box_h, w, h], fill=(0, 0, 0, 150))
             y = h - box_h + SUB_PAD
             for ln in lines:
-                shaped = get_display(ln)                    # logical -> visual per line
-                bb = draw.textbbox((0, 0), shaped, font=font)
+                ln = get_display(ln)     # no-op with RAQM; bidi-reorders only on fallback
+                bb = draw.textbbox((0, 0), ln, font=font)
                 tw = bb[2] - bb[0]
                 x = (w - SUB_PAD - tw) if rtl else SUB_PAD  # RTL: right-align; LTR: left-align
-                draw.text((x, y), shaped, font=font, fill=(255, 255, 255, 255))
+                draw.text((x, y), ln, font=font, fill=(255, 255, 255, 255),
+                         direction="rtl" if (rtl and _HAS_RAQM) else "ltr")
                 y += line_h
 
         vw.write(cv2.cvtColor(np.array(img.convert("RGB")), cv2.COLOR_RGB2BGR))

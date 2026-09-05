@@ -23,9 +23,15 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from bidi.algorithm import get_display
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, features
 from tqdm import tqdm
+
+_HAS_RAQM = features.check("raqm")   # RAQM does bidi+shaping; don't pre-reorder
+if not _HAS_RAQM:
+    from bidi.algorithm import get_display
+else:
+    def get_display(s):
+        return s
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from schema import Transcript  # noqa: E402
@@ -137,7 +143,8 @@ def main():
             tw = bb[2] - bb[0]
             x = (w - 20 - tw) if rtl else 20
             draw.rectangle([0, out_h - sub_h, w, out_h], fill=(0, 0, 0, 170))
-            draw.text((x, out_h - sub_h + 30), shaped, font=font, fill=(255, 255, 255, 255))
+            draw.text((x, out_h - sub_h + 30), shaped, font=font, fill=(255, 255, 255, 255),
+                     direction="rtl" if (rtl and _HAS_RAQM) else "ltr")
 
         vw.write(cv2.cvtColor(np.array(img.convert("RGB")), cv2.COLOR_RGB2BGR))
 

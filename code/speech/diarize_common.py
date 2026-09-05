@@ -90,11 +90,62 @@ def assign_speakers(transcript, segments):
     return transcript
 
 
+# default role names by talk-time rank, plus the SIM_* language buckets
+_RANK_ROLES = ["trainee / cadet", "instructor", "sim instructor",
+               "sim callout", "other speaker", "other speaker"]
+
+
+def role_breakdown(transcript, roles: dict[str, str] | None = None) -> list[dict]:
+    """Per speaker label: talk time (s), % of total talk time, word count,
+    and a role name. Roles default to a talk-time-rank heuristic
+    (rank 0 -> trainee, 1 -> instructor, 2 -> sim instructor, rest -> sim
+    callout) plus SIM_EN/SIM_HE from diarize_langid; pass `roles`
+    ({'SPEAKER_00': 'instructor', ...}) to override."""
+    secs: dict[str, float] = {}
+    words: dict[str, int] = {}
+    for seg in transcript.segments:
+        spk = seg.speaker or "SPEAKER_UNK"
+        for w in (seg.words or [seg]):
+            secs[spk] = secs.get(spk, 0.0) + max(0.0, w.end - w.start)
+        words[spk] = words.get(spk, 0) + len(seg.words)
+    total = sum(secs.values()) or 1e-9
+
+    ranked = [s for s in sorted(secs, key=lambda s: -secs[s])
+              if not s.startswith("SIM_") and s != "SPEAKER_UNK"]
+    auto = {s: _RANK_ROLES[min(i, len(_RANK_ROLES) - 1)] for i, s in enumerate(ranked)}
+
+    out = []
+    for spk in sorted(secs, key=lambda s: -secs[s]):
+        if roles and spk in roles:
+            role = roles[spk]
+        elif spk == "SIM_EN":
+            role = "sim callout (EN)"
+        elif spk.startswith("SIM_"):
+            role = f"sim callout ({spk[4:]})"
+        elif spk == "SPEAKER_UNK":
+            role = "unassigned"
+        else:
+            role = auto.get(spk, "other speaker")
+        out.append({"speaker": spk, "role": role,
+                    "seconds": round(secs[spk], 1),
+                    "pct": round(100 * secs[spk] / total, 1),
+                    "words": words.get(spk, 0)})
+    return out
+
+
+def format_roles(transcript, roles=None) -> str:
+    rows = role_breakdown(transcript, roles)
+    w = max((len(r["role"]) for r in rows), default=4)
+    lines = [f"  {'role'.ljust(w)}  {'speaker':<12} {'time':>8} {'pct':>7} {'words':>7}"]
+    for r in rows:
+        lines.append(f"  {r['role'].ljust(w)}  {r['speaker']:<12} "
+                     f"{r['seconds']:>7.1f}s {r['pct']:>6.1f}% {r['words']:>7}")
+    return "\n".join(lines)
+
+
 def print_summary(transcript, dest):
-    counts: dict[str, int] = {}
-    for w in transcript.words():
-        counts[w.speaker] = counts.get(w.speaker, 0) + 1
-    print(f"speakers: {counts} -> {dest}")
+    print(format_roles(transcript))
+    print(f"  -> {dest}")
 
 
 def run_cli(backend_name: str, diarize_fn):

@@ -106,13 +106,12 @@ def main():
                 fn(wt, win_wav)               # backend doesn't take a count (nemo, wespeaker)
             if args.langid:
                 importlib.import_module("diarize_langid").refine(wt, win_wav)
-            counts: dict[str, int] = {}
-            for w in wt.words():
-                counts[w.speaker] = counts.get(w.speaker, 0) + 1
+            from diarize_common import format_roles
             tj = out_dir / f"{key}.transcript.json"
             wt.save(tj)
-            report.append(f"{key:12} OK   {counts}")
-            print(f"  {counts} -> {tj}")
+            roles_txt = format_roles(wt)
+            report.append(f"=== {key} ===\n{roles_txt}")
+            print(f"{roles_txt}\n  -> {tj}")
             if not args.no_video:
                 subprocess.run([sys.executable, str(Path(__file__).parent / "audio_vis.py"),
                                 str(win_mp4), "--transcript", str(tj), "--start", "0",
@@ -121,12 +120,15 @@ def main():
                 print(f"  movie -> {out_dir / f'{key}.mp4'}")
         except Exception as e:
             msg = f"{type(e).__name__}: {e}".splitlines()[0][:200]
-            report.append(f"{key:12} SKIP {msg}")
+            report.append(f"=== {key} ===  SKIP {msg}")
             print(f"  SKIPPED: {msg}")
             traceback.print_exc(limit=1)
 
     (out_dir / "_report.txt").write_text(
-        f"diarize_compare  {sortie}  window {start:.0f}-{end:.0f}s\n\n" + "\n".join(report) + "\n")
+        f"diarize_compare  {sortie}  window {start:.0f}-{end:.0f}s\n"
+        f"roles are a talk-time-rank heuristic (rank0=trainee, 1=instructor, "
+        f"2=sim instructor, rest=sim callout); SIM_* rows come from --langid\n\n"
+        + "\n\n".join(report) + "\n")
     print(f"\nreport -> {out_dir / '_report.txt'}")
     print("\n".join(report))
 
