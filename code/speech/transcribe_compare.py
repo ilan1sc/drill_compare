@@ -61,11 +61,22 @@ def main():
     ap.add_argument("--backends",
                     default="whisper_openai,ivrit_v3,ivrit_yi,ivrit_turbo,mms,seamless_large")
     ap.add_argument("--no-video", action="store_true")
+    ap.add_argument("--report-only", action="store_true",
+                    help="skip transcription/rendering; rebuild report.md/json from the "
+                         "<backend>.transcript.json files already in asr_compare/")
     args = ap.parse_args()
 
     sortie = Path(args.video).stem
     out_dir = AUDIO_DIR / sortie / "asr_compare"
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.report_only:
+        rows = {}
+        for tj in sorted(out_dir.glob("*.transcript.json")):
+            key = tj.name[: -len(".transcript.json")]
+            rows[key] = metrics(Transcript.load(tj), args.duration)
+        _write_report(out_dir, sortie, args.start, args.duration, rows)
+        return
 
     win_wav = out_dir / "window.wav"
     win_mp4 = out_dir / "window.mp4"
@@ -102,14 +113,16 @@ def main():
             print(f"  FAILED: {rows[key]['error']}")
             traceback.print_exc(limit=1)
 
-    # ---- report
+    _write_report(out_dir, sortie, args.start, args.duration, rows)
+
+
+def _write_report(out_dir, sortie, start, duration, rows):
     (out_dir / "report.json").write_text(json.dumps(
-        {"sortie": sortie, "window_s": [args.start, args.start + args.duration],
-         "backends": rows}, indent=2, ensure_ascii=False))
+        {"sortie": sortie, "window_s": [start, start + duration], "backends": rows},
+        indent=2, ensure_ascii=False))
 
     md = [f"# ASR backend comparison -- {sortie}",
-          f"\nwindow: {args.start:.0f}-{args.start + args.duration:.0f}s "
-          f"({args.duration:.0f}s of audio)\n",
+          f"\nwindow: {start:.0f}-{start + duration:.0f}s ({duration:.0f}s of audio)\n",
           "| backend | " + " | ".join(METRIC_COLS) + " |",
           "|" + "---|" * (len(METRIC_COLS) + 1)]
     for key, m in rows.items():

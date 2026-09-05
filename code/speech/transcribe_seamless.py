@@ -23,7 +23,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from transcribe_common import build_transcript, chunk, load_wav  # noqa: E402
-from schema import Word  # noqa: E402
+from schema import Segment, Word  # noqa: E402
 
 VARIANTS = {"large": ("facebook/seamless-m4t-v2-large", "SeamlessM4Tv2Model"),
             "medium": ("facebook/seamless-m4t-medium", "SeamlessM4TModel")}
@@ -50,23 +50,36 @@ def transcribe(video, language: str | None = "heb", variant: str = "large", win_
     proc, model = _load(variant)
     y, sr, wav = load_wav(video)
 
-    words = []
+    words, segs = [], []
     for t0, seg in chunk(y, sr, win_s=win_s, hop_s=win_s):
-        inputs = proc(audios=seg, sampling_rate=sr, return_tensors="pt").to(model.device)
+        try:
+            inputs = proc(audio=seg, sampling_rate=sr, return_tensors="pt").to(model.device)
+        except TypeError:
+            inputs = proc(audios=seg, sampling_rate=sr, return_tensors="pt").to(model.device)
         with torch.no_grad():
-            toks = model.generate(**inputs, tgt_lang=lang, generate_speech=False)
-        ids = toks[0].tolist()[0] if isinstance(toks, (list, tuple)) or hasattr(toks, "__getitem__") \
-            else toks
+            out = model.generate(**inputs, tgt_lang=lang, generate_speech=False)
+        # v2 returns a namedtuple/obj with .sequences; v1 returns a tensor;
+        # some builds return a nested list. Normalise to a flat id list.
+        ids = getattr(out, "sequences", out)
+        try:
+            ids = ids[0].tolist()
+        except Exception:
+            ids = list(ids)
+        while isinstance(ids, list) and ids and isinstance(ids[0], list):
+            ids = ids[0]
         text = proc.decode(ids, skip_special_tokens=True).strip()
         if not text:
             continue
         parts = text.split()
         dur = min(win_s, len(seg) / sr)
         step = dur / max(len(parts), 1)
-        for k, p in enumerate(parts):
-            words.append(Word(text=p, start=round(t0 + k * step, 2),
-                             end=round(t0 + (k + 1) * step, 2), prob=None))
-    return build_transcript(Path(video).stem, video, words)
+        ws = [Word(text=p, start=round(t0 + k * step, 2),
+                  end=round(t0 + (k + 1) * step, 2), prob=None)
+             for k, p in enumerate(parts)]
+        words += ws
+        segs.append(Segment(id=len(segs), start=round(t0, 2), end=round(t0 + dur, 2),
+                            text=text, lang="he", speaker=None, words=ws))
+    return build_transcript(Path(video).stem, video, words, segments=segs)
 
 
 if __name__ == "__main__":
