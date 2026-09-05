@@ -1,0 +1,14 @@
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1788641943.740319  444535 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1788641943.768309  444541 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1788641943.776700  444541 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+left: 1227 samples, coverage 8.9% of frames sampled -> /home/ilan/Documents/flight school/drill_compare/exports/gaze/s1 c6/left.json
+right: 843 samples, coverage 6.1% of frames sampled -> /home/ilan/Documents/flight school/drill_compare/exports/gaze/s1 c6/right.json
+Exception ignored in: <function FaceLandmarker.__del__ at 0xfee81d2aeca0>
+Traceback (most recent call last):
+  File "/home/ilan/.local/lib/python3.12/site-packages/mediapipe/tasks/python/vision/face_landmarker.py", line 3357, in __del__
+  File "/home/ilan/.local/lib/python3.12/site-packages/mediapipe/tasks/python/vision/face_landmarker.py", line 3332, in close
+  File "/home/ilan/.local/lib/python3.12/site-packages/mediapipe/tasks/python/core/serial_dispatcher.py", line 74, in shutdown_aware_handler
+  File "/home/ilan/.local/lib/python3.12/site-packages/mediapipe/tasks/python/core/mediapipe_c_utils.py", line 126, in dispatcher_wrapper
+TypeError: 'NoneType' object is not callable

@@ -76,7 +76,14 @@ def _eye_offset(lm, w, h, eye) -> tuple[float, float] | None:
     return float(np.clip(dx, -1.5, 1.5)), float(np.clip(dy, -1.5, 1.5))
 
 
-def extract(video: str | Path, hz: float = 5.0, num_faces: int = 2) -> list[GazeTrack]:
+def extract(video: str | Path, hz: float = 5.0, num_faces: int = 2,
+            crop: tuple[int, int, int, int] | None = None, upscale: float = 1.0,
+            seat_override: str | None = None) -> list[GazeTrack]:
+    """crop = (x0,y0,x1,y1) px applied to every frame before detection
+    (use it to isolate one seat and drop lens flare / tool chrome); upscale
+    enlarges that crop before mediapipe (small/soft faces detect better);
+    seat_override forces the output seat label (with a crop, left/right by
+    face x-position is meaningless)."""
     import mediapipe as mp
     from mediapipe.tasks import python as mp_python
     from mediapipe.tasks.python import vision
@@ -96,7 +103,8 @@ def extract(video: str | Path, hz: float = 5.0, num_faces: int = 2) -> list[Gaze
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     step = max(1, int(round(fps / hz)))
 
-    seats: dict[str, list[GazeSample]] = {"left": [], "right": []}
+    from collections import defaultdict
+    seats: dict[str, list[GazeSample]] = defaultdict(list)
     idx = 0
     while True:
         ok, frame = cap.read()
@@ -104,11 +112,20 @@ def extract(video: str | Path, hz: float = 5.0, num_faces: int = 2) -> list[Gaze
             break
         if idx % step == 0:
             t = idx / fps
+            if crop is not None:
+                x0, y0, x1, y1 = crop
+                frame = frame[max(0, y0):y1, max(0, x0):x1]
+            if upscale and upscale != 1.0:
+                frame = cv2.resize(frame, None, fx=upscale, fy=upscale,
+                                   interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(_enhance(frame), cv2.COLOR_BGR2RGB)
             res = landmarker.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb))
             for lm, matrix in zip(res.face_landmarks, res.facial_transformation_matrixes):
-                cx = float(np.mean([p.x for p in lm])) * frame.shape[1]
-                seat = "left" if cx < w / 2 else "right"
+                if seat_override:
+                    seat = seat_override
+                else:
+                    cx = float(np.mean([p.x for p in lm])) * frame.shape[1]
+                    seat = "left" if cx < w / 2 else "right"
                 hyaw, hpitch, _ = _head_pose(matrix)
                 offs = [o for o in (_eye_offset(lm, frame.shape[1], frame.shape[0], R_EYE),
                                     _eye_offset(lm, frame.shape[1], frame.shape[0], L_EYE)) if o]
@@ -140,9 +157,15 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("video")
     ap.add_argument("--hz", type=float, default=5.0)
+    ap.add_argument("--crop", default=None, help="x0,y0,x1,y1 px -- isolate one seat")
+    ap.add_argument("--upscale", type=float, default=1.0)
+    ap.add_argument("--seat", default=None, help="force seat label (use with --crop)")
     args = ap.parse_args()
 
-    tracks = extract(args.video, hz=args.hz)
+    crop = tuple(int(v) for v in args.crop.split(",")) if args.crop else None
+    nf = 1 if crop else 2
+    tracks = extract(args.video, hz=args.hz, num_faces=nf, crop=crop,
+                     upscale=args.upscale, seat_override=args.seat)
     out_dir = GAZE_DIR / Path(args.video).stem
     for tr in tracks:
         out = out_dir / f"{tr.seat}.json"
