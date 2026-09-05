@@ -27,24 +27,27 @@ MODEL_ID = "damo/speech_campplus_speaker-diarization_common"
 _PIPE = None
 
 
-def _segments_modelscope(wav: str, n_speakers: int):
+def _segments_modelscope(wav: str, n_speakers):
     global _PIPE
     if _PIPE is None:
         from modelscope.pipelines import pipeline
         _PIPE = pipeline(task="speaker-diarization", model=MODEL_ID)
-    out = _PIPE(str(wav), oracle_num=n_speakers)
+    out = _PIPE(str(wav), **({"oracle_num": int(n_speakers)} if n_speakers else {}))
     rows = out["text"] if isinstance(out, dict) else out
     return [(float(r[0]), float(r[1]), str(r[2])) for r in rows]
 
 
-def _segments_speakerlab(wav: str, n_speakers: int):
+def _segments_speakerlab(wav: str, n_speakers):
     from speakerlab.bin.infer_diarization import Diarization3Dspeaker
     d = Diarization3Dspeaker(device="cuda", include_overlap=True)
-    res = d(str(wav), num_speakers=n_speakers)
+    res = d(str(wav), **({"num_speakers": int(n_speakers)} if n_speakers else {}))
     return [(float(r[0]), float(r[1]), str(r[2])) for r in res]
 
 
-def diarize(transcript, wav_path, n_speakers: int = 2):
+def diarize(transcript, wav_path, n_speakers=None):
+    """n_speakers: int forces exactly that many; None lets 3D-Speaker's own
+    spectral clustering pick the count (recommended when it's uncertain --
+    e.g. crew + sim instructor + HE/EN sim callouts, up to ~5)."""
     wav = ensure_wav16k(wav_path)
     try:
         segs = _segments_modelscope(str(wav), n_speakers)

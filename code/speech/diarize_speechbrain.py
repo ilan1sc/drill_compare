@@ -53,7 +53,10 @@ def _speech_spans(transcript, pad=0.2):
     return [(max(0.0, a - pad), b + pad) for a, b in spans]
 
 
-def diarize(transcript, wav_path, n_speakers: int = 2, win: float = 1.5, hop: float = 0.75):
+def diarize(transcript, wav_path, n_speakers: int = 5, win: float = 1.5, hop: float = 0.75):
+    """n_speakers: SpectralClustering needs a fixed count -- pass the max you
+    expect (crew + sim instructor + HE/EN sim callouts ~= 5). It will still
+    leave a cluster empty if that speaker isn't present."""
     import soundfile as sf
     import torch
     from sklearn.cluster import SpectralClustering

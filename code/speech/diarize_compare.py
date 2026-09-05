@@ -69,8 +69,16 @@ def main():
     ap.add_argument("--start", type=float, default=0.0)
     ap.add_argument("--duration", type=float, default=300.0)
     ap.add_argument("--backends", default="mfcc,nemo,speechbrain,wespeaker,3dspeaker")
+    ap.add_argument("--speakers", default="auto",
+                    help="max speaker count for backends that accept one "
+                         "(int, or 'auto' to let each backend decide). Up to ~5 here: "
+                         "cadet, instructor, sim instructor, HE sim callouts, EN sim callouts.")
+    ap.add_argument("--langid", action="store_true",
+                    help="after each backend, run diarize_langid.refine() to split out "
+                         "SIM_EN callout segments (unreliable on short noisy clips -- see that module)")
     ap.add_argument("--no-video", action="store_true", help="skip movie rendering, labels only")
     args = ap.parse_args()
+    n_spk = None if args.speakers == "auto" else int(args.speakers)
 
     base = Transcript.load(args.transcript)
     sortie = Path(args.transcript).parent.name
@@ -92,7 +100,12 @@ def main():
         wt = _window_transcript(base, start, end)
         try:
             fn = getattr(importlib.import_module(mod_name), fn_name)
-            fn(wt, win_wav)
+            try:
+                fn(wt, win_wav, n_speakers=n_spk)
+            except TypeError:
+                fn(wt, win_wav)               # backend doesn't take a count (nemo, wespeaker)
+            if args.langid:
+                importlib.import_module("diarize_langid").refine(wt, win_wav)
             counts: dict[str, int] = {}
             for w in wt.words():
                 counts[w.speaker] = counts.get(w.speaker, 0) + 1

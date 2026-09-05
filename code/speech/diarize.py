@@ -57,7 +57,7 @@ def _embed(y, sr, t0, t1):
 
 
 def diarize(transcript: Transcript, wav_path: str | Path,
-           n_speakers: int = 2, pause_gap: float = 0.6) -> Transcript:
+           n_speakers: int = 5, pause_gap: float = 0.6) -> Transcript:
     import librosa
     from sklearn.cluster import AgglomerativeClustering
     from sklearn.preprocessing import StandardScaler
@@ -108,7 +108,7 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("transcript_json")
     ap.add_argument("--wav", help="wav path (default exports/audio/<sortie>.wav)")
-    ap.add_argument("--speakers", type=int, default=2)
+    ap.add_argument("--speakers", type=int, default=5)
     ap.add_argument("--pause-gap", type=float, default=0.6)
     args = ap.parse_args()
 

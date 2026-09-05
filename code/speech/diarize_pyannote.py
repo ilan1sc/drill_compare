@@ -45,13 +45,15 @@ def _pipeline():
     return _PIPE
 
 
-def _segments(wav: str, n_speakers: int = 2):
-    diarization = _pipeline()(str(wav), num_speakers=n_speakers)
+def _segments(wav: str, n_speakers):
+    # n_speakers: int -> allow up to that many; None -> let pyannote decide
+    kw = {"min_speakers": 1, "max_speakers": int(n_speakers)} if n_speakers else {}
+    diarization = _pipeline()(str(wav), **kw)
     return [(turn.start, turn.end, label)
             for turn, _, label in diarization.itertracks(yield_label=True)]
 
 
-def diarize(transcript, wav_path, n_speakers: int = 2):
+def diarize(transcript, wav_path, n_speakers=5):
     wav = ensure_wav16k(wav_path)
     return assign_speakers(transcript, _segments(str(wav), n_speakers))
 

@@ -41,11 +41,19 @@ BAR_W = 14
 SUB_PAD = 18
 
 
-def _wrap(draw, text, font, max_w):
+HEBREW = tuple(range(0x0590, 0x0600)) + tuple(range(0xFB1D, 0xFB50))
+
+
+def _is_rtl(s: str) -> bool:
+    return any(ord(c) in HEBREW for c in s)
+
+
+def _wrap_logical(draw, text, font, max_w):
+    """Wrap on LOGICAL text (bidi reordering happens per-line, afterwards)."""
     words, lines, cur = text.split(), [], ""
     for w in words:
         trial = f"{cur} {w}".strip()
-        if draw.textbbox((0, 0), trial, font=font)[2] <= max_w or not cur:
+        if draw.textbbox((0, 0), get_display(trial), font=font)[2] <= max_w or not cur:
             cur = trial
         else:
             lines.append(cur)
@@ -53,6 +61,20 @@ def _wrap(draw, text, font, max_w):
     if cur:
         lines.append(cur)
     return lines
+
+
+def _cfr_window(video, start, duration, fps) -> Path:
+    """One constant-frame-rate clip carrying BOTH the exact frames we'll
+    draw on and the exact audio for the same span -- so nothing can drift."""
+    out = Path(video).with_suffix("")
+    out = out.parent / f".{out.name}_cfr_{int(start)}_{int(duration)}.mp4"
+    subprocess.run([
+        "ffmpeg", "-y", "-v", "error", "-ss", str(start), "-t", str(duration),
+        "-i", str(video), "-r", f"{fps}", "-vsync", "cfr",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-ar", "48000", str(out),
+    ], check=True)
+    return out
 
 
 def render(video: str, transcript_json: str, start: float, duration: float,
@@ -75,10 +97,17 @@ def render(video: str, transcript_json: str, start: float, duration: float,
                 return s
         return None
 
-    cap = cv2.VideoCapture(video)
-    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    probe = cv2.VideoCapture(video)
+    raw_fps = probe.get(cv2.CAP_PROP_FPS)
+    probe.release()
+    if not raw_fps or raw_fps <= 0 or raw_fps > 240:
+        raise RuntimeError(f"could not read a sane fps ({raw_fps}) from {video}")
+    fps = round(raw_fps, 3)
+
+    cfr = _cfr_window(video, start, duration, fps)   # frames + audio, locked together
+    cap = cv2.VideoCapture(str(cfr))
     w, h = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    cap.set(cv2.CAP_PROP_POS_MSEC, start * 1000)
+    n_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     font = ImageFont.truetype(FONT_PATH, max(22, h // 32))
     label_font = ImageFont.truetype(FONT_PATH, max(20, h // 36))
@@ -86,19 +115,17 @@ def render(video: str, transcript_json: str, start: float, duration: float,
     tmp_silent = Path(out_path).with_suffix(".silent.mp4")
     vw = cv2.VideoWriter(str(tmp_silent), cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
 
-    n_frames = int(duration * fps)
     for i in tqdm(range(n_frames), desc="rendering frames", unit="f"):
         ok, frame = cap.read()
         if not ok:
             break
-        tt = start + i / fps
+        tt = i / fps                       # cfr clip starts at 0; transcript is already windowed
         seg = active_segment(tt)
         speaker = seg.speaker if seg else None
 
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         draw = ImageDraw.Draw(img, "RGBA")
 
-        # speaker banners (left = cadet, right = instructor)
         if speaker == cadet:
             draw.rectangle([0, 0, BAR_W, h], fill=CADET_RGBA)
             draw.rectangle([0, 0, 220, 46], fill=CADET_RGBA[:3] + (200,))
@@ -110,18 +137,20 @@ def render(video: str, transcript_json: str, start: float, duration: float,
             draw.text((w - 16 - (bbox[2] - bbox[0]), 10), "INSTRUCTOR", font=label_font,
                      fill=(255, 255, 255, 255))
 
-        # subtitle
         if seg and seg.text.strip():
-            txt = get_display(seg.text.strip())
-            lines = _wrap(draw, txt, font, w - 2 * SUB_PAD)[-3:]
+            logical = seg.text.strip()
+            rtl = _is_rtl(logical)
+            lines = _wrap_logical(draw, logical, font, w - 2 * SUB_PAD)[-3:]
             line_h = font.size + 10
             box_h = line_h * len(lines) + 2 * SUB_PAD
             draw.rectangle([0, h - box_h, w, h], fill=(0, 0, 0, 150))
             y = h - box_h + SUB_PAD
             for ln in lines:
-                bbox = draw.textbbox((0, 0), ln, font=font)
-                x = (w - (bbox[2] - bbox[0])) / 2
-                draw.text((x, y), ln, font=font, fill=(255, 255, 255, 255))
+                shaped = get_display(ln)                    # logical -> visual per line
+                bb = draw.textbbox((0, 0), shaped, font=font)
+                tw = bb[2] - bb[0]
+                x = (w - SUB_PAD - tw) if rtl else SUB_PAD  # RTL: right-align; LTR: left-align
+                draw.text((x, y), shaped, font=font, fill=(255, 255, 255, 255))
                 y += line_h
 
         vw.write(cv2.cvtColor(np.array(img.convert("RGB")), cv2.COLOR_RGB2BGR))
@@ -134,13 +163,13 @@ def render(video: str, transcript_json: str, start: float, duration: float,
     print("muxing audio (ffmpeg) ...")
     subprocess.run([
         "ffmpeg", "-y", "-v", "error",
-        "-i", str(tmp_silent),
-        "-ss", str(start), "-t", str(duration), "-i", video,
+        "-i", str(tmp_silent), "-i", str(cfr),      # audio straight from the CFR window
         "-map", "0:v:0", "-map", "1:a:0?",
         "-c:v", "libx264", "-preset", "fast", "-crf", "20",
         "-c:a", "aac", "-shortest", str(out_path),
     ], check=True)
     tmp_silent.unlink(missing_ok=True)
+    cfr.unlink(missing_ok=True)
     return out_path
 
 
