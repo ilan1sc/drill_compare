@@ -1,0 +1,421 @@
+======== s1 c2 13:09:08 ========
+[1/4] transcribe  ivrit-ai/whisper-large-v3 ...
+/home/ilan/.local/lib/python3.12/site-packages/modelscope/utils/plugins.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-09-06 13:19:12,463 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:19:12,463 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common.
+2026-09-06 13:19:12,464 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:19:15,572 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:19:15,572 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:19:15,572 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common'}. trying to build by task and model information.
+2026-09-06 13:19:15,572 - modelscope - WARNING - No preprocessor key ('cluster-backend', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:19:18,511 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:19:21,860 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:19:22,174 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:19:22,174 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common.
+2026-09-06 13:19:22,184 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:19:22,370 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:19:22,370 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:19:22,370 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:19:22,370 - modelscope - WARNING - No preprocessor key ('cam++-sv', 'speaker-verification') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:19:22,370 - modelscope - INFO - Doing VAD...
+2026-09-06 13:19:25,586 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:19:29,083 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:19:29,409 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:19:29,409 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch.
+2026-09-06 13:19:29,419 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:19:36,004 [INFO] download models from model hub: ms
+2026-09-06 13:19:36,008 [WARNING] trust_remote_code: False
+2026-09-06 13:19:36,012 [INFO] Loading pretrained params from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:19:36,012 [INFO] ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:19:36,014 [INFO] scope_map: ['module.', 'None']
+2026-09-06 13:19:36,014 [INFO] excludes: None
+2026-09-06 13:19:36,015 [INFO] Loading ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb, status: <All keys matched successfully>
+2026-09-06 13:19:36,026 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:19:36,026 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:19:36,026 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch'}. trying to build by task and model information.
+2026-09-06 13:19:36,026 - modelscope - WARNING - No preprocessor key ('funasr', 'voice-activity-detection') found in PREPROCESSOR_MAP, skip building preprocessor.
+      324 segments, 2861 words, 2711s  (597s)
+[2/4] diarize  3D-Speaker ...
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+funasr version: 1.4.14.
+Check update of funasr, and it would cost few times. You may disable it by set `disable_update=True` in AutoModel
+You are using the latest version of funasr-1.4.14
+  0%|[34m          [0m| 0/1 [00:00<?, ?it/s]100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.91s/it]{'load_data': '0.000', 'extract_feat': '4.881', 'forward': '4.907', 'batch_size': '1', 'rtf': '0.433'}, : 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.91s/it]rtf_avg: 0.433: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.91s/it]                                                                                          rtf_avg: 0.433: 100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.31s/it]
+2026-09-06 13:19:41,347 - modelscope - INFO - Doing segmentation...
+2026-09-06 13:19:41,361 - modelscope - INFO - Extracting embeddings...
+2026-09-06 13:19:53,819 - modelscope - INFO - Clustering...
+2026-09-06 13:19:54,086 - modelscope - INFO - Post processing...
+2026-09-06 13:19:57,596 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:20:00,434 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:20:00,740 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:20:00,740 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common.
+2026-09-06 13:20:00,752 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:20:01,039 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:20:01,039 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:20:01,039 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:20:01,039 - modelscope - WARNING - No preprocessor key ('scl-sd', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+[3/4] glossary tag ...
+      transcript -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c2/transcript.json
+      review queue -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c2/glossary_review_queue.csv
+[4/4] biomarkers ...
+cadet speaker: SPEAKER_00
+  b01_observation_statements: {'count': 14, 'per_minute': 0.31, 'share_of_cadet_segments': 0.089}
+  b02_intention_statements: {'count': 1, 'per_minute': 0.022, 'share_of_cadet_segments': 0.006}
+  b03_action_statements: {'count': 4, 'per_minute': 0.089, 'share_of_cadet_segments': 0.025}
+  b04_verification_statements: {'count': 8, 'per_minute': 0.177, 'share_of_cadet_segments': 0.051}
+  b05_oiav_loop: {'episodes': 21, 'loop_complete_rate': 0.0, 'loop_in_order_rate': 0.0, 'avg_latency_s': {'O->I': None, 'I->A': None, 'A->V': None, 'O->V': None}}
+  b06_error_recognition_correction: {'count': 0, 'per_minute': 0.0, 'share_of_cadet_segments': 0.0}
+  b07_prediction_statements: {'count': 2, 'per_minute': 0.044, 'share_of_cadet_segments': 0.013}
+  b08_prioritization_statements: {'count': 3, 'per_minute': 0.066, 'share_of_cadet_segments': 0.019}
+  b09_information_sharing_crm: {'count': 2, 'per_minute': 0.044, 'by_speaker': {'SPEAKER_00': 2}, 'cadet_initiated': 2}
+  b10_communication_relevance: {'segments_total': 158, 'segments_relevant': 33, 'relevance_share_segments': 0.209, 'relevance_share_words': 0.307, 'talkativeness_words_per_min': 39.57, 'relevant_words_per_min': 12.15}
+  b11_verbalization_by_phase: {'phases': 10, 'phase_source': 'fixed_5min', 'max_words_per_min_phase': '15-20min', 'min_words_per_min_phase': '45-50min'}
+  b12_plan_clarity: {'intention_statements': 1, 'avg_clarity_score': 0.333, 'follow_through_rate': 0.0, 'sequencing_rate': 0.0}
+  b13_disfluencies_restarts: {'total_words': 1788, 'fillers': 8, 'filler_rate': 0.0045, 'immediate_repeats': 5, 'repeat_rate': 0.0028, 'restarts_with_pause': 2, 'restart_rate': 0.0011, 'disfluency_rate': 0.0084}
+  b14_pause_hesitation: {'gaps_measured': 214, 'baseline_median_s': 0.68, 'baseline_mad_s': 0.36, 'hesitation_threshold_s': 1.76, 'hesitations': 50, 'hesitations_per_min': 1.106}
+  b15_acoustic_candidates: {'segments_analyzed': 157, 'pitch_mean_hz': {'mean': 159.0131, 'std': 32.4441}, 'pitch_variability_hz': {'mean': 26.3702, 'std': 11.3041}, 'energy_rms': {'mean': 0.0119, 'std': 0.0076}, 'rhythm_words_per_s': {'mean': 2.4974, 'std': 1.4749}, 'jitter_proxy': {'mean': 0.0616, 'std': 0.0223}, 'shimmer_proxy': {'mean': 0.2462, 'std': 0.1067}, 'validated': False}
+Wrote /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c2/biomarkers/_summary.json
+done s1 c2 in 684s
+Wrote exports/audio_best/s1 c2/biomarker_vis_600_180.mp4
+======== s1 c3 13:24:50 ========
+[1/4] transcribe  ivrit-ai/whisper-large-v3 ...
+/home/ilan/.local/lib/python3.12/site-packages/modelscope/utils/plugins.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-09-06 13:37:33,225 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:37:33,225 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common.
+2026-09-06 13:37:33,226 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:37:36,482 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:37:36,482 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:37:36,482 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common'}. trying to build by task and model information.
+2026-09-06 13:37:36,482 - modelscope - WARNING - No preprocessor key ('cluster-backend', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:37:39,150 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:37:42,333 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:37:42,646 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:37:42,646 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common.
+2026-09-06 13:37:42,655 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:37:42,998 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:37:42,998 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:37:42,998 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:37:42,998 - modelscope - WARNING - No preprocessor key ('cam++-sv', 'speaker-verification') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:37:42,999 - modelscope - INFO - Doing VAD...
+2026-09-06 13:37:47,263 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:37:50,698 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:37:51,009 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:37:51,009 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch.
+2026-09-06 13:37:51,018 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:37:57,303 [INFO] download models from model hub: ms
+2026-09-06 13:37:57,307 [WARNING] trust_remote_code: False
+2026-09-06 13:37:57,311 [INFO] Loading pretrained params from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:37:57,311 [INFO] ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:37:57,313 [INFO] scope_map: ['module.', 'None']
+2026-09-06 13:37:57,313 [INFO] excludes: None
+2026-09-06 13:37:57,313 [INFO] Loading ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb, status: <All keys matched successfully>
+2026-09-06 13:37:57,324 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:37:57,324 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:37:57,324 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch'}. trying to build by task and model information.
+2026-09-06 13:37:57,324 - modelscope - WARNING - No preprocessor key ('funasr', 'voice-activity-detection') found in PREPROCESSOR_MAP, skip building preprocessor.
+      502 segments, 4007 words, 2771s  (755s)
+[2/4] diarize  3D-Speaker ...
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+funasr version: 1.4.14.
+Check update of funasr, and it would cost few times. You may disable it by set `disable_update=True` in AutoModel
+You are using the latest version of funasr-1.4.14
+  0%|[34m          [0m| 0/1 [00:00<?, ?it/s]100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.94s/it]{'load_data': '0.000', 'extract_feat': '4.923', 'forward': '4.942', 'batch_size': '1', 'rtf': '0.461'}, : 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.94s/it]rtf_avg: 0.461: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.94s/it]                                                                                          rtf_avg: 0.461: 100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.18s/it]
+2026-09-06 13:38:02,513 - modelscope - INFO - Doing segmentation...
+2026-09-06 13:38:02,531 - modelscope - INFO - Extracting embeddings...
+2026-09-06 13:38:26,177 - modelscope - INFO - Clustering...
+2026-09-06 13:38:26,919 - modelscope - INFO - Post processing...
+2026-09-06 13:38:29,560 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:38:32,388 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:38:32,688 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:38:32,689 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common.
+2026-09-06 13:38:32,698 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:38:33,175 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:38:33,175 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:38:33,175 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:38:33,175 - modelscope - WARNING - No preprocessor key ('scl-sd', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+[3/4] glossary tag ...
+      transcript -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c3/transcript.json
+      review queue -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c3/glossary_review_queue.csv
+[4/4] biomarkers ...
+cadet speaker: SPEAKER_00
+  b01_observation_statements: {'count': 95, 'per_minute': 2.057, 'share_of_cadet_segments': 0.242}
+  b02_intention_statements: {'count': 1, 'per_minute': 0.022, 'share_of_cadet_segments': 0.003}
+  b03_action_statements: {'count': 103, 'per_minute': 2.231, 'share_of_cadet_segments': 0.262}
+  b04_verification_statements: {'count': 7, 'per_minute': 0.152, 'share_of_cadet_segments': 0.018}
+  b05_oiav_loop: {'episodes': 25, 'loop_complete_rate': 0.0, 'loop_in_order_rate': 0.0, 'avg_latency_s': {'O->I': None, 'I->A': None, 'A->V': None, 'O->V': None}}
+  b06_error_recognition_correction: {'count': 1, 'per_minute': 0.022, 'share_of_cadet_segments': 0.003}
+  b07_prediction_statements: {'count': 1, 'per_minute': 0.022, 'share_of_cadet_segments': 0.003}
+  b08_prioritization_statements: {'count': 4, 'per_minute': 0.087, 'share_of_cadet_segments': 0.01}
+  b09_information_sharing_crm: {'count': 5, 'per_minute': 0.108, 'by_speaker': {'SPEAKER_01': 5}, 'cadet_initiated': 0}
+  b10_communication_relevance: {'segments_total': 393, 'segments_relevant': 198, 'relevance_share_segments': 0.504, 'relevance_share_words': 0.586, 'talkativeness_words_per_min': 60.07, 'relevant_words_per_min': 35.19}
+  b11_verbalization_by_phase: {'phases': 10, 'phase_source': 'fixed_5min', 'max_words_per_min_phase': '15-20min', 'min_words_per_min_phase': '45-50min'}
+  b12_plan_clarity: {'intention_statements': 1, 'avg_clarity_score': 0.667, 'follow_through_rate': 1.0, 'sequencing_rate': 0.0}
+  b13_disfluencies_restarts: {'total_words': 2774, 'fillers': 3, 'filler_rate': 0.0011, 'immediate_repeats': 4, 'repeat_rate': 0.0014, 'restarts_with_pause': 0, 'restart_rate': 0.0, 'disfluency_rate': 0.0025}
+  b14_pause_hesitation: {'gaps_measured': 500, 'baseline_median_s': 0.86, 'baseline_mad_s': 0.36, 'hesitation_threshold_s': 1.94, 'hesitations': 75, 'hesitations_per_min': 1.624}
+  b15_acoustic_candidates: {'segments_analyzed': 390, 'pitch_mean_hz': {'mean': 107.148, 'std': 12.0027}, 'pitch_variability_hz': {'mean': 10.7378, 'std': 9.5269}, 'energy_rms': {'mean': 0.0094, 'std': 0.0049}, 'rhythm_words_per_s': {'mean': 2.4755, 'std': 0.9762}, 'jitter_proxy': {'mean': 0.0398, 'std': 0.0196}, 'shimmer_proxy': {'mean': 0.2372, 'std': 0.1213}, 'validated': False}
+Wrote /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c3/biomarkers/_summary.json
+done s1 c3 in 867s
+Wrote exports/audio_best/s1 c3/biomarker_vis_600_180.mp4
+======== s1 c4 13:44:19 ========
+[1/4] transcribe  ivrit-ai/whisper-large-v3 ...
+/home/ilan/.local/lib/python3.12/site-packages/modelscope/utils/plugins.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-09-06 13:58:03,381 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:58:03,381 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common.
+2026-09-06 13:58:03,381 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 13:58:06,455 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:58:06,455 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:58:06,455 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common'}. trying to build by task and model information.
+2026-09-06 13:58:06,455 - modelscope - WARNING - No preprocessor key ('cluster-backend', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:58:10,473 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:58:13,653 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 13:58:13,956 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:58:13,956 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common.
+2026-09-06 13:58:13,966 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 13:58:14,134 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:58:14,134 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:58:14,134 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:58:14,134 - modelscope - WARNING - No preprocessor key ('cam++-sv', 'speaker-verification') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 13:58:14,135 - modelscope - INFO - Doing VAD...
+2026-09-06 13:58:17,924 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:58:21,380 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 13:58:21,708 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:58:21,708 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch.
+2026-09-06 13:58:21,717 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 13:58:28,361 [INFO] download models from model hub: ms
+2026-09-06 13:58:28,366 [WARNING] trust_remote_code: False
+2026-09-06 13:58:28,369 [INFO] Loading pretrained params from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:58:28,369 [INFO] ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 13:58:28,371 [INFO] scope_map: ['module.', 'None']
+2026-09-06 13:58:28,371 [INFO] excludes: None
+2026-09-06 13:58:28,372 [INFO] Loading ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb, status: <All keys matched successfully>
+2026-09-06 13:58:28,374 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:58:28,374 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:58:28,374 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch'}. trying to build by task and model information.
+2026-09-06 13:58:28,374 - modelscope - WARNING - No preprocessor key ('funasr', 'voice-activity-detection') found in PREPROCESSOR_MAP, skip building preprocessor.
+      589 segments, 4117 words, 2409s  (816s)
+[2/4] diarize  3D-Speaker ...
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+funasr version: 1.4.14.
+Check update of funasr, and it would cost few times. You may disable it by set `disable_update=True` in AutoModel
+You are using the latest version of funasr-1.4.14
+  0%|[34m          [0m| 0/1 [00:00<?, ?it/s]100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.31s/it]{'load_data': '0.000', 'extract_feat': '4.292', 'forward': '4.311', 'batch_size': '1', 'rtf': '0.410'}, : 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.31s/it]rtf_avg: 0.410: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.31s/it]                                                                                          rtf_avg: 0.410: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.67s/it]
+2026-09-06 13:58:33,052 - modelscope - INFO - Doing segmentation...
+2026-09-06 13:58:33,081 - modelscope - INFO - Extracting embeddings...
+2026-09-06 13:58:56,685 - modelscope - INFO - Clustering...
+2026-09-06 13:58:57,412 - modelscope - INFO - Post processing...
+2026-09-06 13:59:00,071 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:59:02,934 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 13:59:03,249 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:59:03,249 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common.
+2026-09-06 13:59:03,258 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 13:59:03,593 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 13:59:03,593 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 13:59:03,593 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 13:59:03,593 - modelscope - WARNING - No preprocessor key ('scl-sd', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+[3/4] glossary tag ...
+      transcript -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c4/transcript.json
+      review queue -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c4/glossary_review_queue.csv
+[4/4] biomarkers ...
+cadet speaker: SPEAKER_00
+  b01_observation_statements: {'count': 172, 'per_minute': 4.284, 'share_of_cadet_segments': 0.348}
+  b02_intention_statements: {'count': 1, 'per_minute': 0.025, 'share_of_cadet_segments': 0.002}
+  b03_action_statements: {'count': 96, 'per_minute': 2.391, 'share_of_cadet_segments': 0.194}
+  b04_verification_statements: {'count': 16, 'per_minute': 0.399, 'share_of_cadet_segments': 0.032}
+  b05_oiav_loop: {'episodes': 20, 'loop_complete_rate': 0.0, 'loop_in_order_rate': 0.0, 'avg_latency_s': {'O->I': None, 'I->A': None, 'A->V': None, 'O->V': None}}
+  b06_error_recognition_correction: {'count': 1, 'per_minute': 0.025, 'share_of_cadet_segments': 0.002}
+  b07_prediction_statements: {'count': 2, 'per_minute': 0.05, 'share_of_cadet_segments': 0.004}
+  b08_prioritization_statements: {'count': 0, 'per_minute': 0.0, 'share_of_cadet_segments': 0.0}
+  b09_information_sharing_crm: {'count': 3, 'per_minute': 0.075, 'by_speaker': {'SPEAKER_01': 2, 'SPEAKER_00': 1}, 'cadet_initiated': 1}
+  b10_communication_relevance: {'segments_total': 494, 'segments_relevant': 271, 'relevance_share_segments': 0.549, 'relevance_share_words': 0.7, 'talkativeness_words_per_min': 72.63, 'relevant_words_per_min': 50.83}
+  b11_verbalization_by_phase: {'phases': 9, 'phase_source': 'fixed_5min', 'max_words_per_min_phase': '35-40min', 'min_words_per_min_phase': '40-45min'}
+  b12_plan_clarity: {'intention_statements': 1, 'avg_clarity_score': 0.0, 'follow_through_rate': 0.0, 'sequencing_rate': 0.0}
+  b13_disfluencies_restarts: {'total_words': 2916, 'fillers': 0, 'filler_rate': 0.0, 'immediate_repeats': 2, 'repeat_rate': 0.0007, 'restarts_with_pause': 0, 'restart_rate': 0.0, 'disfluency_rate': 0.0007}
+  b14_pause_hesitation: {'gaps_measured': 647, 'baseline_median_s': 0.78, 'baseline_mad_s': 0.3, 'hesitation_threshold_s': 1.68, 'hesitations': 86, 'hesitations_per_min': 2.142}
+  b15_acoustic_candidates: {'segments_analyzed': 488, 'pitch_mean_hz': {'mean': 115.2813, 'std': 13.6243}, 'pitch_variability_hz': {'mean': 12.1541, 'std': 7.4636}, 'energy_rms': {'mean': 0.0082, 'std': 0.0034}, 'rhythm_words_per_s': {'mean': 2.5761, 'std': 0.9243}, 'jitter_proxy': {'mean': 0.0446, 'std': 0.023}, 'shimmer_proxy': {'mean': 0.2568, 'std': 0.0856}, 'validated': False}
+Wrote /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c4/biomarkers/_summary.json
+done s1 c4 in 928s
+Wrote exports/audio_best/s1 c4/biomarker_vis_600_180.mp4
+======== s1 c5 14:03:59 ========
+[1/4] transcribe  ivrit-ai/whisper-large-v3 ...
+/home/ilan/.local/lib/python3.12/site-packages/modelscope/utils/plugins.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-09-06 14:14:52,802 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 14:14:52,803 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common.
+2026-09-06 14:14:52,804 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 14:14:55,872 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:14:55,872 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:14:55,872 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common'}. trying to build by task and model information.
+2026-09-06 14:14:55,872 - modelscope - WARNING - No preprocessor key ('cluster-backend', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 14:14:59,586 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 14:15:03,638 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 14:15:03,970 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 14:15:03,971 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common.
+2026-09-06 14:15:03,981 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 14:15:04,316 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:15:04,316 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:15:04,316 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 14:15:04,316 - modelscope - WARNING - No preprocessor key ('cam++-sv', 'speaker-verification') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 14:15:04,317 - modelscope - INFO - Doing VAD...
+2026-09-06 14:15:09,043 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 14:15:13,819 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 14:15:14,151 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 14:15:14,151 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch.
+2026-09-06 14:15:14,161 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 14:15:20,409 [INFO] download models from model hub: ms
+2026-09-06 14:15:20,414 [WARNING] trust_remote_code: False
+2026-09-06 14:15:20,418 [INFO] Loading pretrained params from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 14:15:20,418 [INFO] ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 14:15:20,422 [INFO] scope_map: ['module.', 'None']
+2026-09-06 14:15:20,423 [INFO] excludes: None
+2026-09-06 14:15:20,423 [INFO] Loading ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb, status: <All keys matched successfully>
+2026-09-06 14:15:20,434 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:15:20,434 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:15:20,434 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch'}. trying to build by task and model information.
+2026-09-06 14:15:20,434 - modelscope - WARNING - No preprocessor key ('funasr', 'voice-activity-detection') found in PREPROCESSOR_MAP, skip building preprocessor.
+      358 segments, 3266 words, 2348s  (646s)
+[2/4] diarize  3D-Speaker ...
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+funasr version: 1.4.14.
+Check update of funasr, and it would cost few times. You may disable it by set `disable_update=True` in AutoModel
+You are using the latest version of funasr-1.4.14
+  0%|[34m          [0m| 0/1 [00:00<?, ?it/s]100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.18s/it]{'load_data': '0.000', 'extract_feat': '4.157', 'forward': '4.177', 'batch_size': '1', 'rtf': '0.516'}, : 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.18s/it]rtf_avg: 0.516: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.18s/it]                                                                                          rtf_avg: 0.516: 100%|[34m██████████[0m| 1/1 [00:04<00:00,  4.54s/it]
+2026-09-06 14:15:24,990 - modelscope - INFO - Doing segmentation...
+2026-09-06 14:15:25,001 - modelscope - INFO - Extracting embeddings...
+2026-09-06 14:15:46,248 - modelscope - INFO - Clustering...
+2026-09-06 14:15:46,811 - modelscope - INFO - Post processing...
+2026-09-06 14:15:49,624 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 14:15:52,452 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 14:15:52,747 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 14:15:52,747 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common.
+2026-09-06 14:15:52,756 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 14:15:53,047 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:15:53,047 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:15:53,047 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 14:15:53,047 - modelscope - WARNING - No preprocessor key ('scl-sd', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+[3/4] glossary tag ...
+      transcript -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c5/transcript.json
+      review queue -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c5/glossary_review_queue.csv
+[4/4] biomarkers ...
+cadet speaker: SPEAKER_00
+  b01_observation_statements: {'count': 89, 'per_minute': 2.274, 'share_of_cadet_segments': 0.26}
+  b02_intention_statements: {'count': 6, 'per_minute': 0.153, 'share_of_cadet_segments': 0.018}
+  b03_action_statements: {'count': 51, 'per_minute': 1.303, 'share_of_cadet_segments': 0.149}
+  b04_verification_statements: {'count': 13, 'per_minute': 0.332, 'share_of_cadet_segments': 0.038}
+  b05_oiav_loop: {'episodes': 20, 'loop_complete_rate': 0.05, 'loop_in_order_rate': 0.0, 'avg_latency_s': {'O->I': None, 'I->A': None, 'A->V': None, 'O->V': None}}
+  b06_error_recognition_correction: {'count': 7, 'per_minute': 0.179, 'share_of_cadet_segments': 0.02}
+  b07_prediction_statements: {'count': 2, 'per_minute': 0.051, 'share_of_cadet_segments': 0.006}
+  b08_prioritization_statements: {'count': 4, 'per_minute': 0.102, 'share_of_cadet_segments': 0.012}
+  b09_information_sharing_crm: {'count': 1, 'per_minute': 0.026, 'by_speaker': {'SPEAKER_00': 1}, 'cadet_initiated': 1}
+  b10_communication_relevance: {'segments_total': 342, 'segments_relevant': 151, 'relevance_share_segments': 0.442, 'relevance_share_words': 0.605, 'talkativeness_words_per_min': 79.96, 'relevant_words_per_min': 48.37}
+  b11_verbalization_by_phase: {'phases': 8, 'phase_source': 'fixed_5min', 'max_words_per_min_phase': '25-30min', 'min_words_per_min_phase': '35-40min'}
+  b12_plan_clarity: {'intention_statements': 6, 'avg_clarity_score': 0.278, 'follow_through_rate': 0.333, 'sequencing_rate': 0.167}
+  b13_disfluencies_restarts: {'total_words': 3129, 'fillers': 4, 'filler_rate': 0.0013, 'immediate_repeats': 10, 'repeat_rate': 0.0032, 'restarts_with_pause': 0, 'restart_rate': 0.0, 'disfluency_rate': 0.0045}
+  b14_pause_hesitation: {'gaps_measured': 481, 'baseline_median_s': 0.78, 'baseline_mad_s': 0.32, 'hesitation_threshold_s': 1.74, 'hesitations': 70, 'hesitations_per_min': 1.789}
+  b15_acoustic_candidates: {'segments_analyzed': 341, 'pitch_mean_hz': {'mean': 157.0694, 'std': 22.0423}, 'pitch_variability_hz': {'mean': 23.0313, 'std': 9.6342}, 'energy_rms': {'mean': 0.0243, 'std': 0.0104}, 'rhythm_words_per_s': {'mean': 2.4111, 'std': 0.9918}, 'jitter_proxy': {'mean': 0.0476, 'std': 0.0163}, 'shimmer_proxy': {'mean': 0.2858, 'std': 0.1081}, 'validated': False}
+Wrote /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c5/biomarkers/_summary.json
+done s1 c5 in 766s
+Wrote exports/audio_best/s1 c5/biomarker_vis_600_180.mp4
+======== s1 c6 14:21:08 ========
+  pipeline already done, skipping
+Wrote exports/audio_best/s1 c6/biomarker_vis_600_180.mp4
+======== s1 c8 14:25:19 ========
+[1/4] transcribe  ivrit-ai/whisper-large-v3 ...
+/home/ilan/.local/lib/python3.12/site-packages/transformers/models/whisper/generation_whisper.py:87: RuntimeWarning: invalid value encountered in scalar add
+  cost[i, j] = matrix[i - 1, j - 1] + c
+/home/ilan/.local/lib/python3.12/site-packages/modelscope/utils/plugins.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-09-06 14:36:47,507 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 14:36:47,507 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common.
+2026-09-06 14:36:47,508 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+2026-09-06 14:36:50,565 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:36:50,565 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:36:50,565 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common'}. trying to build by task and model information.
+2026-09-06 14:36:50,565 - modelscope - WARNING - No preprocessor key ('cluster-backend', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 14:36:54,947 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 14:36:59,462 - modelscope - WARNING - Model revision not specified, use revision: v2.0.2
+2026-09-06 14:36:59,777 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 14:36:59,777 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common.
+2026-09-06 14:36:59,786 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+2026-09-06 14:36:59,942 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:36:59,942 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:36:59,942 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 14:36:59,942 - modelscope - WARNING - No preprocessor key ('cam++-sv', 'speaker-verification') found in PREPROCESSOR_MAP, skip building preprocessor.
+2026-09-06 14:36:59,943 - modelscope - INFO - Doing VAD...
+2026-09-06 14:37:03,187 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 14:37:06,406 - modelscope - INFO - Use user-specified model revision: v2.0.2
+2026-09-06 14:37:06,710 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 14:37:06,710 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch.
+2026-09-06 14:37:06,719 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+2026-09-06 14:37:13,206 [INFO] download models from model hub: ms
+2026-09-06 14:37:13,215 [WARNING] trust_remote_code: False
+2026-09-06 14:37:13,221 [INFO] Loading pretrained params from /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 14:37:13,221 [INFO] ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb
+2026-09-06 14:37:13,228 [INFO] scope_map: ['module.', 'None']
+2026-09-06 14:37:13,228 [INFO] excludes: None
+2026-09-06 14:37:13,230 [INFO] Loading ckpt: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/model.pb, status: <All keys matched successfully>
+2026-09-06 14:37:13,243 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:37:13,243 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:37:13,243 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch'}. trying to build by task and model information.
+2026-09-06 14:37:13,243 - modelscope - WARNING - No preprocessor key ('funasr', 'voice-activity-detection') found in PREPROCESSOR_MAP, skip building preprocessor.
+      471 segments, 3775 words, 2749s  (681s)
+[2/4] diarize  3D-Speaker ...
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_speaker-diarization_common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus_sv_zh-cn_16k-common
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch
+funasr version: 1.4.14.
+Check update of funasr, and it would cost few times. You may disable it by set `disable_update=True` in AutoModel
+You are using the latest version of funasr-1.4.14
+  0%|[34m          [0m| 0/1 [00:00<?, ?it/s]100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.08s/it]{'load_data': '0.000', 'extract_feat': '5.008', 'forward': '5.081', 'batch_size': '1', 'rtf': '0.104'}, : 100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.08s/it]rtf_avg: 0.104: 100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.08s/it]                                                                                          rtf_avg: 0.104: 100%|[34m██████████[0m| 1/1 [00:05<00:00,  5.42s/it]
+2026-09-06 14:37:18,676 - modelscope - INFO - Doing segmentation...
+2026-09-06 14:37:18,683 - modelscope - INFO - Extracting embeddings...
+2026-09-06 14:37:39,387 - modelscope - INFO - Clustering...
+2026-09-06 14:37:39,990 - modelscope - INFO - Post processing...
+2026-09-06 14:37:42,486 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 14:37:47,467 - modelscope - WARNING - Model revision not specified, use revision: v1.0.0
+2026-09-06 14:37:47,782 - modelscope - INFO - initiate model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 14:37:47,782 - modelscope - INFO - initiate model from location /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common.
+2026-09-06 14:37:47,791 - modelscope - INFO - initialize model from /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+2026-09-06 14:37:48,116 - modelscope - WARNING - No preprocessor field found in cfg.
+2026-09-06 14:37:48,116 - modelscope - WARNING - No val key and type key found in preprocessor domain of configuration.json file.
+2026-09-06 14:37:48,117 - modelscope - WARNING - Cannot find available config to build preprocessor at mode inference, current config: {'model_dir': '/home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common'}. trying to build by task and model information.
+2026-09-06 14:37:48,117 - modelscope - WARNING - No preprocessor key ('scl-sd', 'speaker-diarization') found in PREPROCESSOR_MAP, skip building preprocessor.
+Downloading Model from https://www.modelscope.cn to directory: /home/ilan/.cache/modelscope/hub/models/damo/speech_campplus-transformer_scl_zh-cn_16k-common
+[3/4] glossary tag ...
+      transcript -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c8/transcript.json
+      review queue -> /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c8/glossary_review_queue.csv
+[4/4] biomarkers ...
+cadet speaker: SPEAKER_00
+  b01_observation_statements: {'count': 22, 'per_minute': 0.48, 'share_of_cadet_segments': 0.096}
+  b02_intention_statements: {'count': 6, 'per_minute': 0.131, 'share_of_cadet_segments': 0.026}
+  b03_action_statements: {'count': 9, 'per_minute': 0.196, 'share_of_cadet_segments': 0.039}
+  b04_verification_statements: {'count': 14, 'per_minute': 0.306, 'share_of_cadet_segments': 0.061}
+  b05_oiav_loop: {'episodes': 24, 'loop_complete_rate': 0.0, 'loop_in_order_rate': 0.0, 'avg_latency_s': {'O->I': None, 'I->A': None, 'A->V': None, 'O->V': None}}
+  b06_error_recognition_correction: {'count': 4, 'per_minute': 0.087, 'share_of_cadet_segments': 0.017}
+  b07_prediction_statements: {'count': 8, 'per_minute': 0.175, 'share_of_cadet_segments': 0.035}
+  b08_prioritization_statements: {'count': 2, 'per_minute': 0.044, 'share_of_cadet_segments': 0.009}
+  b09_information_sharing_crm: {'count': 3, 'per_minute': 0.065, 'by_speaker': {'SPEAKER_00': 2, 'SPEAKER_01': 1}, 'cadet_initiated': 2}
+  b10_communication_relevance: {'segments_total': 229, 'segments_relevant': 61, 'relevance_share_segments': 0.266, 'relevance_share_words': 0.426, 'talkativeness_words_per_min': 48.94, 'relevant_words_per_min': 20.82}
+  b11_verbalization_by_phase: {'phases': 10, 'phase_source': 'fixed_5min', 'max_words_per_min_phase': '25-30min', 'min_words_per_min_phase': '45-50min'}
+  b12_plan_clarity: {'intention_statements': 6, 'avg_clarity_score': 0.222, 'follow_through_rate': 0.167, 'sequencing_rate': 0.333}
+  b13_disfluencies_restarts: {'total_words': 2242, 'fillers': 7, 'filler_rate': 0.0031, 'immediate_repeats': 122, 'repeat_rate': 0.0544, 'restarts_with_pause': 2, 'restart_rate': 0.0009, 'disfluency_rate': 0.0584}
+  b14_pause_hesitation: {'gaps_measured': 308, 'baseline_median_s': 0.72, 'baseline_mad_s': 0.36, 'hesitation_threshold_s': 1.8, 'hesitations': 53, 'hesitations_per_min': 1.157}
+  b15_acoustic_candidates: {'segments_analyzed': 221, 'pitch_mean_hz': {'mean': 155.0596, 'std': 36.052}, 'pitch_variability_hz': {'mean': 26.1224, 'std': 20.0875}, 'energy_rms': {'mean': 0.0153, 'std': 0.0096}, 'rhythm_words_per_s': {'mean': 2.5716, 'std': 1.1668}, 'jitter_proxy': {'mean': 0.0512, 'std': 0.0197}, 'shimmer_proxy': {'mean': 0.2711, 'std': 0.1462}, 'validated': False}
+Wrote /home/ilan/Documents/flight school/drill_compare/exports/audio_best/s1 c8/biomarkers/_summary.json
+done s1 c8 in 785s
+Wrote exports/audio_best/s1 c8/biomarker_vis_600_180.mp4
+======== ALL DONE 14:42:47 ========
