@@ -149,6 +149,9 @@ def main():
             gx = pfd_cx + sx * (yaw - cen_y)
             gy = pfd_cy - sy * (pitch - cen_p)
             gx, gy = gx * ax, gy * ay
+            off = not (0 <= gx <= w and 0 <= gy <= h)
+            gx = float(np.clip(gx, 14, w - 14))          # keep it on-screen; edge = "off that way"
+            gy = float(np.clip(gy, 14, h - 14))
             trail.append((gx, gy, lb))
             trail[:] = trail[-18:]
             for k, (tx, ty, tl) in enumerate(trail[:-1]):
@@ -156,8 +159,10 @@ def main():
                 draw.line([tx, ty, trail[k + 1][0], trail[k + 1][1]],
                           fill=LABEL_COL.get(tl, (200, 200, 200)) + (a,), width=3)
             c = LABEL_COL.get(lb, (200, 200, 200))
-            draw.ellipse([gx - 16, gy - 16, gx + 16, gy + 16], outline=c + (255,), width=4)
-            draw.ellipse([gx - 4, gy - 4, gx + 4, gy + 4], fill=c + (255,))
+            r = 22 if off else 16                        # bigger hollow ring when clamped to an edge
+            draw.ellipse([gx - r, gy - r, gx + r, gy + r], outline=c + (255,), width=4)
+            if not off:
+                draw.ellipse([gx - 4, gy - 4, gx + 4, gy + 4], fill=c + (255,))
             is_pfd = lb == "on_pfd"
         else:
             is_pfd = False
@@ -173,11 +178,13 @@ def main():
         state = {"on_pfd": "ON PFD", "other_inside": "inside (not PFD)",
                  "outside": "OUTSIDE", None: "no gaze"}[cur_lab]
         sc = LABEL_COL.get(cur_lab, (150, 150, 150))
-        draw.rectangle([0, 0, 430, 104], fill=(0, 0, 0, 150))
-        draw.text((14, 8), state, font=font, fill=sc + (255,))
-        draw.text((14, 8 + font.size + 6), f"PFD  10s {roll_pct:4.0f}%   all {cum_pct:4.0f}%",
+        y0 = 40                                          # clear the review-tool's own header
+        draw.rectangle([0, y0, 430, y0 + 96], fill=(0, 0, 0, 170))
+        draw.text((14, y0 + 6), state, font=font, fill=sc + (255,))
+        draw.text((14, y0 + 6 + font.size + 6),
+                  f"PFD  10s {roll_pct:4.0f}%   all {cum_pct:4.0f}%",
                   font=small, fill=(235, 235, 235, 255))
-        draw.text((14, 8 + font.size + 6 + small.size + 4),
+        draw.text((14, y0 + 6 + font.size + 6 + small.size + 4),
                   f"t={t_atm:6.1f}s  (face {t_face:6.1f}s)", font=small, fill=(180, 180, 180, 255))
 
         vw.write(cv2.cvtColor(np.array(img.convert("RGB")), cv2.COLOR_RGB2BGR))

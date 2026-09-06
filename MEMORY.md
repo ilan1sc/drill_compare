@@ -1,0 +1,1 @@
+- [ATM/face-cam geometry](atm-facecam-geometry.md) — s1 c6 gaze pipeline: cameras are mirror images (--flip-x), sync = atm_t = face_t − 2.69s, crop+upscale for face detection
