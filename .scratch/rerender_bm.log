@@ -11,3 +11,9 @@ Wrote exports/audio_best/s1 c4/biomarker_vis_600_180.mp4
 [sync] video offset -0.05s (MAD 0.0, n=12)  |  audio offset 0.0s (MAD 0.0, n=12)
 Wrote exports/audio_best/s1 c5/biomarker_vis_600_180.mp4
 ======== s1 c6 00:31:14 ========
+[sync] video offset -0.058s (MAD 0.024, n=12)  |  audio offset 0.0s (MAD 0.0, n=12)
+Wrote exports/audio_best/s1 c6/biomarker_vis_600_180.mp4
+======== s1 c8 00:35:03 ========
+[sync] video offset -0.05s (MAD 0.009, n=12)  |  audio offset 0.0s (MAD 0.0, n=12)
+Wrote exports/audio_best/s1 c8/biomarker_vis_600_180.mp4
+======== DONE 00:39:04 ========
