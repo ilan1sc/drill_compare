@@ -161,7 +161,8 @@ def main() -> None:
         sys.exit("end time must be after begin time")
     start_frame = round(start * fps)
     rois = load_rois(args.rois)
-    boxes = {n: px_box(rois[n]["box"], W, H) for n in FIELDS}
+    fields = list(rois)  # a --rois override can add fields beyond the FIELDS default
+    boxes = {n: px_box(rois[n]["box"], W, H) for n in fields}
 
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     out_csv = Path(args.out) if args.out else EXPORT_DIR / f"{src.stem}_pfd.csv"
@@ -180,9 +181,9 @@ def main() -> None:
         stdout=subprocess.PIPE,
     )
 
-    last_sig = {n: None for n in FIELDS}
-    last_val = {n: None for n in FIELDS}
-    series = {n: [] for n in FIELDS}
+    last_sig = {n: None for n in fields}
+    last_val = {n: None for n in fields}
+    series = {n: [] for n in fields}
     n_ocr = 0
     est_total = int(round((end - start) * fps))
 
@@ -192,7 +193,7 @@ def main() -> None:
         if len(buf) < frame_bytes:
             break
         frame = np.frombuffer(buf, np.uint8).reshape(H, W)
-        for n in FIELDS:
+        for n in fields:
             x, y, w, h = boxes[n]
             crop = frame[y:y + h, x:x + w]
             if args.debug and i == 0:
@@ -215,18 +216,18 @@ def main() -> None:
 
     if args.smooth > 1:
         series = {n: clean_series(series[n], args.smooth, rois[n].get("jump", 1e9))
-                  for n in FIELDS}
+                  for n in fields}
 
     with open(out_csv, "w") as fh:
-        fh.write("frame,time_s," + ",".join(FIELDS) + "\n")
+        fh.write("frame,time_s," + ",".join(fields) + "\n")
         for k in range(i):
             fnum = start_frame + k
             fh.write(f"{fnum},{fnum / fps:.3f}," + ",".join(
-                "" if series[n][k] is None else str(series[n][k]) for n in FIELDS
+                "" if series[n][k] is None else str(series[n][k]) for n in fields
             ) + "\n")
 
     print(f"\n{i} frames -> {out_csv}")
-    print(f"{n_ocr} OCR calls ({n_ocr / max(i * len(FIELDS), 1):.1%} of crops)")
+    print(f"{n_ocr} OCR calls ({n_ocr / max(i * len(fields), 1):.1%} of crops)")
 
 
 if __name__ == "__main__":
