@@ -19,7 +19,7 @@ t_shift) -- like pfd_compare_csv3.py's amplitude fit, but here on the
 actual RA/HOT values directly (both already real, non-wrapping numbers --
 no angle handling needed).
 
-    python3 code/pfd_verify_altitude.py --pfd <pfd_csv> --data <telemetry_csv>
+    python3 code/pfd_sync/pfd_verify_altitude.py --pfd <pfd_csv> --data <telemetry_csv>
 """
 import argparse
 from pathlib import Path
@@ -31,7 +31,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy import signal
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 HOT = ("FFS1_Ownship.ESL_LHD_Landing_detection."
        "ESL_LHD_Landing_detection.Point_1_HOT")
 GRID_HZ = 4.0

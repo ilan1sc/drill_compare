@@ -11,8 +11,8 @@ verifying a fit found elsewhere.
                     LHD_ESL_Flight_Model_Data.TrueAirSpeed   (m/s -> kt)
     PFD  airspeed : `airspeed` column of the OCR'd PFD csv (kt, as shown)
 
-    python3 code/pfd_verify_airspeed.py --pfd <pfd_csv> --data <telemetry_csv>
-    python3 code/pfd_verify_airspeed.py --pfd <pfd_csv> --data <telemetry_csv> \\
+    python3 code/pfd_sync/pfd_verify_airspeed.py --pfd <pfd_csv> --data <telemetry_csv>
+    python3 code/pfd_sync/pfd_verify_airspeed.py --pfd <pfd_csv> --data <telemetry_csv> \\
         --t-scale 0.9990 --t-shift 0.5      # verify at a fit found elsewhere
 """
 import argparse
@@ -25,7 +25,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy import signal
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 TAS = ("FFS1_Ownship.LHD_ESL_Flight_Model_Data."
        "LHD_ESL_Flight_Model_Data.TrueAirSpeed")
 MPS_TO_KT = 1.943844

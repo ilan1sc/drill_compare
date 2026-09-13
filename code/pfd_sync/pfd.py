@@ -33,7 +33,7 @@ import numpy as np
 from PIL import Image
 from rapidocr_onnxruntime import RapidOCR
 
-EXPORT_DIR = Path(__file__).resolve().parent.parent / "exports" / "pfd"
+EXPORT_DIR = Path(__file__).resolve().parent.parent.parent / "exports" / "pfd"
 
 # box: (x, y, w, h) as fractions of the frame. lo/hi: plausible value range.
 # jump: with --smooth, a reading this far from the local trend is discarded

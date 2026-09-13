@@ -16,7 +16,7 @@ Per channel (collective / lateral cyclic / longitudinal cyclic):
 Limitation: pure signal statistics on the raw control channel; doesn't
 know which movements were maneuver-appropriate (a steep turn entry
 *should* have a bigger rate spike than cruise) -- pair with
-pfd_compare_csv.py's drills to view this per maneuver type.
+pfd_sync/pfd_compare_csv.py's drills to view this per maneuver type.
 """
 
 import sys

@@ -1,6 +1,6 @@
 """Shared plumbing for the flight-control-analytics biomarkers (PRD 10).
 
-Flight analytics (code/pfd_compare_csv.py's drills) describes WHAT the
+Flight analytics (code/pfd_sync/pfd_compare_csv.py's drills) describes WHAT the
 aircraft did. These modules describe HOW the cadet produced that result,
 from the raw control-input channels in the sim data CSV -- collective,
 plus the CYCLIC's two axes (lateral = roll, longitudinal = pitch):

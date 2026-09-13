@@ -29,8 +29,8 @@ with a ~10-20x margin so genuine aggressive maneuvering never gets
 gated): airspeed 7.4 kt/s, altitude 49 ft/s, heading 77.5 deg/s. RA and
 torque were already comparatively clean in the raw OCR.
 
-    python3 code/data_pfd_cleaner.py "exports/pfd/003_F2-GARMIN_PFD COCKPIT_pfd.csv"
-    python3 code/data_pfd_cleaner.py <in.csv> --out <out.csv>
+    python3 code/pfd_sync/data_pfd_cleaner.py "exports/pfd/003_F2-GARMIN_PFD COCKPIT_pfd.csv"
+    python3 code/pfd_sync/data_pfd_cleaner.py <in.csv> --out <out.csv>
 """
 import argparse
 from pathlib import Path
@@ -38,7 +38,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 
 # frame_gate: max plausible change per frame (same units as the column).
 # hampel_window_s / hampel_gate: for the stuck-run check -- window long

@@ -7,7 +7,7 @@ on); this shows the heading angle itself, before and after applying the
 time alignment it found -- the intuitive "do these two headings actually
 match" view.
 
-    python3 code/pfd_heading_compare_plot.py --pfd <pfd_csv> --data <telemetry_csv>
+    python3 code/pfd_sync/pfd_heading_compare_plot.py --pfd <pfd_csv> --data <telemetry_csv>
 """
 import argparse
 import sys
@@ -20,7 +20,7 @@ from plotly.subplots import make_subplots
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pfd_compare_csv3 import load_pfd_heading, load_data_heading, fit  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 def _wrap_break(t, h):

@@ -5,7 +5,7 @@ Stages, run in this order (select a subset with --stages):
 
   pfd_sync           OCR the PFD video -> heading CSV, cross-correlate against
                       telemetry heading for a time offset + drift.
-                      (code/pfd.py + code/pfd_compare_csv3.py)
+                      (code/pfd_sync/pfd.py + code/pfd_sync/pfd_compare_csv3.py)
   segmentation        split each sortie into drill attempts/segments.
                       NOT IMPLEMENTED in this repo -- see
                       documents/Segmentation_DB.md (a segmented database
@@ -44,11 +44,11 @@ STAGES = ["pfd_sync", "segmentation", "audio_biomarkers", "flight_control"]
 
 # pfd.py's built-in ROIs are tuned to a different, 1920x1080 PFD skin and
 # land on blank sky/ground on this dataset's 1024x768 clips (verified
-# 2026-09-11). code/pfd_rois_check1_1024x768.json replaces them with boxes
+# 2026-09-11). code/pfd_sync/pfd_rois_check1_1024x768.json replaces them with boxes
 # hand-marked and OCR-verified against a real frame (heading/ra/pi/altitude/
 # airspeed all read correctly, 2026-09-11/12) -- pass --rois to point at a
 # different override, or --force-pfd-ocr to run with pfd.py's defaults anyway.
-DEF_PFD_ROIS = ROOT / "code" / "pfd_rois_check1_1024x768.json"
+DEF_PFD_ROIS = ROOT / "code" / "pfd_sync" / "pfd_rois_check1_1024x768.json"
 
 
 def discover_csv(csv_root: Path, sortie: str) -> Path | None:
@@ -124,7 +124,7 @@ def stage_pfd_sync(info: dict, args) -> dict:
     if args.debug_rois:
         dbg_csv = STATUS_DIR / info["sortie"] / "pfd_roi_check.csv"
         dbg_csv.parent.mkdir(parents=True, exist_ok=True)
-        run_cmd(["python3", "code/pfd.py", info["pfd_video"], "0", "2",
+        run_cmd(["python3", "code/pfd_sync/pfd.py", info["pfd_video"], "0", "2",
                   "--debug", *rois_flag, "--out", str(dbg_csv)])
         debug_dir = ROOT / "exports" / "pfd" / "debug"
         crops = {}
@@ -148,11 +148,11 @@ def stage_pfd_sync(info: dict, args) -> dict:
     # or concurrent/sequential runs across sorties silently clobber each other.
     out_csv = ROOT / "exports" / "pfd" / f"{info['sortie']}_{Path(info['pfd_video']).stem}_pfd.csv"
     t0 = time.time()
-    r = run_cmd(["python3", "code/pfd.py", info["pfd_video"], *rois_flag, "--out", str(out_csv)])
+    r = run_cmd(["python3", "code/pfd_sync/pfd.py", info["pfd_video"], *rois_flag, "--out", str(out_csv)])
     if r.returncode != 0:
         return {"status": "error", "reason": "pfd.py OCR failed", "stderr": r.stderr[-1000:]}
     compare_out = STATUS_DIR / info["sortie"] / "pfd_sync.html"
-    r2 = run_cmd(["python3", "code/pfd_compare_csv3.py", "--pfd", str(out_csv),
+    r2 = run_cmd(["python3", "code/pfd_sync/pfd_compare_csv3.py", "--pfd", str(out_csv),
                    "--data", info["csv"], "--out", str(compare_out)])
     return {"status": "ok" if r2.returncode == 0 else "error",
             "pfd_csv": str(out_csv), "compare_html": str(compare_out),

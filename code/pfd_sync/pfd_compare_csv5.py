@@ -26,8 +26,8 @@ found in one shot via cross-correlation of the (cos, sin) heading
 components (exact for the mean-cos score, and fast -- no per-shift loop);
 the best-scoring scale is then refined on a finer grid around it.
 
-    python3 code/pfd_compare_csv5.py --pfd <pfd_csv> --data <telemetry_csv>
-    python3 code/pfd_compare_csv5.py --scale-min 0.95 --scale-max 1.05
+    python3 code/pfd_sync/pfd_compare_csv5.py --pfd <pfd_csv> --data <telemetry_csv>
+    python3 code/pfd_sync/pfd_compare_csv5.py --scale-min 0.95 --scale-max 1.05
 """
 import argparse
 from pathlib import Path
@@ -38,7 +38,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from scipy import signal
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 DEF_PFD = ROOT / "exports" / "pfd" / "s1 c7 pfd rothman roitkof_pfd.csv"
 DEF_DATA = ("/home/ilan/Documents/flight school/data/csv_data/1_26/"
             "CSV_3.6.26_check1/007/Elements_0.csv")

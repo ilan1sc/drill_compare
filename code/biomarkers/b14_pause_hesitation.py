@@ -4,7 +4,7 @@ than through universal thresholds.
 Per PRD wording: no fixed "300ms = hesitation" cutoff. Instead this
 computes the cadet's own inter-word gap distribution for THIS sortie (or
 per-phase if --phases-csv is given, e.g. the re-timed drills table from
-pfd_compare_csv.py/csv3.py/csv4.py) and flags a gap as a hesitation only
+pfd_sync/pfd_compare_csv.py/csv3.py/csv4.py) and flags a gap as a hesitation only
 if it is an outlier relative to that local baseline: gap > median +
 k * MAD (k = --k, default 3; MAD = median absolute deviation, robust to
 the outliers themselves). Gaps longer than --turn-cap (default 8s) are

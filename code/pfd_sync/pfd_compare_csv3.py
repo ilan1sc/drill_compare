@@ -20,13 +20,13 @@ the two rate traces at the best alignment.
 
 Usage
 -----
-    python3 code/pfd_compare_csv3.py
-    python3 code/pfd_compare_csv3.py --pfd "exports/pfd/s1 c8 pdf sorek lifman_pfd.csv" \\
+    python3 code/pfd_sync/pfd_compare_csv3.py
+    python3 code/pfd_sync/pfd_compare_csv3.py --pfd "exports/pfd/s1 c8 pdf sorek lifman_pfd.csv" \\
         --data ".../CSV_3.6.26_check1/008/Elements_0.csv"
-    python3 code/pfd_compare_csv3.py --scale-min 0.95 --scale-max 1.05
+    python3 code/pfd_sync/pfd_compare_csv3.py --scale-min 0.95 --scale-max 1.05
 
-    cd "/home/ilan/Documents/flight school/drill_compare" && python3 code/pfd_compare_csv3.py
-python3 code/pfd_compare_csv3.py \
+    cd "/home/ilan/Documents/flight school/drill_compare" && python3 code/pfd_sync/pfd_compare_csv3.py
+python3 code/pfd_sync/pfd_compare_csv3.py \
   --pfd "exports/pfd/s1 c8 pdf sorek lifman_pfd.csv" \
   --data "/home/ilan/Documents/flight school/data/csv_data/1_26/CSV_3.6.26_check1/008/Elements_0.csv"
 
@@ -41,7 +41,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from scipy import signal
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 DEF_PFD = ROOT / "exports" / "pfd" / "s1 c7 pfd rothman roitkof_pfd.csv"
 DEF_DATA = ("/home/ilan/Documents/flight school/data/csv_data/1_26/"
             "CSV_3.6.26_check1/007/Elements_0.csv")

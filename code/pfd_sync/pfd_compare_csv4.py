@@ -15,10 +15,10 @@ CSV. Before/after graphs are written to HTML.
 
 Usage
 -----
-    python3 code/pfd_compare_csv4.py
-    python3 code/pfd_compare_csv4.py --pfd "exports/pfd/s1 c8 pdf sorek lifman_pfd.csv" \\
+    python3 code/pfd_sync/pfd_compare_csv4.py
+    python3 code/pfd_sync/pfd_compare_csv4.py --pfd "exports/pfd/s1 c8 pdf sorek lifman_pfd.csv" \\
         --data ".../CSV_3.6.26_check1/008/Elements_0.csv"
-    python3 code/pfd_compare_csv4.py --max-shift 120
+    python3 code/pfd_sync/pfd_compare_csv4.py --max-shift 120
 """
 
 import argparse
@@ -29,7 +29,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 DEF_PFD = ROOT / "exports" / "pfd" / "s1 c7 pfd rothman roitkof_pfd.csv"
 DEF_DATA = ("/home/ilan/Documents/flight school/data/csv_data/1_26/"
             "CSV_3.6.26_check1/003/Elements_0.csv")

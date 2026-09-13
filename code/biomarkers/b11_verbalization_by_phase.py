@@ -3,9 +3,9 @@
 Bins the cadet's words-per-minute (a rough workload/verbalization-load
 proxy) into phases. Phases come from --phases-csv (columns: start,end,
 label, seconds, SAME time base as the transcript i.e. the PFD video
-clock) -- e.g. the drills table from code/pfd_compare_csv.py, after
-re-timing it to video time with code/pfd_compare_csv3.py or
-pfd_compare_csv4.py (--no-aligned-csv off writes exactly that CSV).
+clock) -- e.g. the drills table from code/pfd_sync/pfd_compare_csv.py, after
+re-timing it to video time with code/pfd_sync/pfd_compare_csv3.py or
+pfd_sync/pfd_compare_csv4.py (--no-aligned-csv off writes exactly that CSV).
 Without --phases-csv, falls back to fixed 5-minute bins so the module
 still runs standalone.
 

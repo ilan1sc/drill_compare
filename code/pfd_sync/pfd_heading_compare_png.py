@@ -3,7 +3,7 @@
 before/after time-align) but rendered to a static PNG with matplotlib --
 no browser/kaleido dependency, so it can be viewed inline.
 
-    python3 code/pfd_heading_compare_png.py --pfd <pfd_csv> --data <telemetry_csv> --out <png>
+    python3 code/pfd_sync/pfd_heading_compare_png.py --pfd <pfd_csv> --data <telemetry_csv> --out <png>
 """
 import argparse
 import sys

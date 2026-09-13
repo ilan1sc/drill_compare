@@ -21,10 +21,10 @@ What it does
 
 Usage
 -----
-    python3 code/pfd_compare_csv.py
-    python3 code/pfd_compare_csv.py --pfd other_pfd.csv --data other/Elements_0.csv
-    cd "/home/ilan/Documents/flight school/drill_compare" && python3 code/pfd_compare_csv.py
-python3 code/pfd_compare_csv.py \
+    python3 code/pfd_sync/pfd_compare_csv.py
+    python3 code/pfd_sync/pfd_compare_csv.py --pfd other_pfd.csv --data other/Elements_0.csv
+    cd "/home/ilan/Documents/flight school/drill_compare" && python3 code/pfd_sync/pfd_compare_csv.py
+python3 code/pfd_sync/pfd_compare_csv.py \
   --pfd "exports/pfd/s1 c6 pfd sorek bigeyes blk hair_pfd.csv" \
   --data "/home/ilan/Documents/flight school/data/csv_data/1_26/CSV_3.6.26_check1/006/Elements_0.csv"
 
@@ -39,7 +39,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from scipy import signal
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 DEF_PFD = ROOT / "exports" / "pfd" / "s1 c7 pfd rothman roitkof_pfd.csv"
 DEF_DATA = ("/home/ilan/Documents/flight school/data/csv_data/1_26/"
             "CSV_3.6.26_check1/007/Elements_0.csv")

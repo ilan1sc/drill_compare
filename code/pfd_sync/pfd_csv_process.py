@@ -16,8 +16,8 @@ Runs, for every sortie with an OCR'd PFD csv under exports/pfd/:
                                               summary table + per-sortie
                                               graphs + recommendation)
 
-    python3 code/pfd_csv_process.py
-    python3 code/pfd_csv_process.py --sorties 004 008
+    python3 code/pfd_sync/pfd_csv_process.py
+    python3 code/pfd_sync/pfd_csv_process.py --sorties 004 008
 """
 import argparse
 import base64
@@ -39,7 +39,7 @@ import pfd_compare_csv5 as csv5             # noqa: E402
 import pfd_verify_airspeed as vias          # noqa: E402
 import pfd_verify_msl_altitude as valt      # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 PFD_DIR = ROOT / "exports" / "pfd"
 CSV_ROOT = Path("/home/ilan/Documents/flight school/ver_data/26.1/26.1.s1/26.1.s1.csv_3.6.26")
 REPORT_DIR = ROOT / "exports" / "pfd_report"

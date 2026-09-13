@@ -5,7 +5,7 @@ Treats the cadet as a proportional controller during hold segments
 (base.activity_segments): deviation(t) = state(t) - hold_mean is the
 error from what they're trying to hold, and control_rate(t + lag) is
 their correction. For each channel, searches a small reaction-lag window
-(0..1.5s, same lag-search idiom as pfd_compare_csv3.py/csv4.py) for the
+(0..1.5s, same lag-search idiom as pfd_sync/pfd_compare_csv3.py/csv4.py) for the
 lag that best correlates deviation with the following control_rate, then
 fits control_rate ~ gain * deviation + b by least squares at that lag.
 

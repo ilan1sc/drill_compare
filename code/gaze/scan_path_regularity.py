@@ -17,7 +17,7 @@ base.assign_aoi), not raw gaze coordinates:
 
 Limitation: "regular" here is a statistical property (repeatable,
 low-entropy), not a judgment of whether the pattern was the RIGHT one for
-the maneuver being flown -- pair with pfd_compare_csv.py's drills to see
+the maneuver being flown -- pair with pfd_sync/pfd_compare_csv.py's drills to see
 which maneuver each regularity score belongs to.
 """
 

@@ -7,7 +7,7 @@ Heuristic: cadet segments matching the `action` cue lexicon
 
 Limitation: cue-phrase matching; silent execution (action performed
 without any verbalization) is invisible to an audio-only biomarker by
-definition -- pair with the flight-data drills (pfd_compare_csv.py) to
+definition -- pair with the flight-data drills (pfd_sync/pfd_compare_csv.py) to
 see when maneuvers happened regardless of whether they were called out.
 """
 

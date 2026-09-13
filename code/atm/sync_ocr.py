@@ -11,7 +11,7 @@ wall clock, so:
 
     ->  B_time = A_time + offset
 
-Reuses rapidocr (already installed for code/pfd.py). The header is large
+Reuses rapidocr (already installed for code/pfd_sync/pfd.py). The header is large
 high-contrast text so a handful of frames is plenty.
 
     python3 code/atm/sync_ocr.py \\

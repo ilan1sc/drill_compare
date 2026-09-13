@@ -12,7 +12,7 @@ drops the thousands digit and the reading saw-tooths by ~1000-9000 ft
 (e.g. actual ~15,900 ft reads as "1500"). This plot does NOT correct that
 -- it's shown as-is so the artifact is visible, not hidden.
 
-    python3 code/pfd_verify_msl_altitude.py --pfd <pfd_csv> --data <telemetry_csv> \\
+    python3 code/pfd_sync/pfd_verify_msl_altitude.py --pfd <pfd_csv> --data <telemetry_csv> \\
         --t-scale 0.9990 --t-shift 0.5
 """
 import argparse
@@ -24,7 +24,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 MSL = ("FFS1_Ownship.LHD_ESL_Flight_Model_Data."
        "LHD_ESL_Flight_Model_Data.AltitudeMSL")
 M_TO_FT = 3.28084

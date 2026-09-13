@@ -6,8 +6,8 @@ the pilot to first look at each AOI cluster at all after the video began
 (mostly useful as a sanity check / for the busiest AOIs).
 
 The intended real use is with --events-csv (columns start,end,kind --
-e.g. the drills table from pfd_compare_csv.py, re-timed to video time via
-pfd_compare_csv3.py/csv4.py): for --target-aoi and every event, time to
+e.g. the drills table from pfd_sync/pfd_compare_csv.py, re-timed to video time via
+pfd_sync/pfd_compare_csv3.py/csv4.py): for --target-aoi and every event, time to
 first fixation on the target AFTER that event's start -- e.g. "how long
 after entering a steep turn before the cadet's gaze reached the
 attitude/bank AOI".
