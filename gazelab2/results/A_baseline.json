@@ -1,0 +1,20 @@
+{
+  "sortie": "02_F2-PILOT CAM COCKPIT- (192.168.17.101)_A_baseline",
+  "source_video": "/home/ilan/Documents/flight school/ver_data/26.1/26.1.s1/26.1.s1.extrct_v2/26.1.s1.c6.sorek_bigeyes_exp_v2/02_F2-PILOT CAM COCKPIT- (192.168.17.101).mp4",
+  "seat": "left",
+  "sample_hz": 5.0,
+  "duration": 300.0,
+  "samples": [
+    {
+      "t": 115.123,
+      "seat": "left",
+      "yaw": 8.5,
+      "pitch": -26.83,
+      "head_yaw": -21.5,
+      "head_pitch": 3.17,
+      "conf": 1.0,
+      "aoi": null,
+      "aoi_label": null
+    }
+  ]
+}
