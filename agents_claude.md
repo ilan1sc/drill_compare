@@ -246,6 +246,7 @@ video/audio media, `__pycache__`.
 ## If you only read one thing
 
 Read the README inside whichever of `code/pfd_sync/`, `gazelab2/`, or
-`code/cockpit_gaze/` you're about to touch — each is kept current and
-has more detail (CLI syntax, exact numbers, exact limitations) than this
-file. This file is the map; those READMEs are the territory.
+`code/cockpit_gaze/` you're about to touch, or `code/speech/audio_res.md`
+for the speech pipeline — each is kept current and has more detail (CLI
+syntax, exact numbers, exact limitations) than this file. This file is
+the map; those docs are the territory.
